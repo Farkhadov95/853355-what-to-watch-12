@@ -1,7 +1,7 @@
 # Личный проект «Что посмотреть»
 
 * Студент: [Amir Farkhadov](https://up.htmlacademy.ru/react/12/user/853355).
-* Наставник: `Неизвестно`.
+* Наставник: [Константин Антонов](https://htmlacademy.ru/profile/rawle51).
 
 ---
 
