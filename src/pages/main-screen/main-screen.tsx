@@ -1,6 +1,7 @@
 import FilmCard from '../../components/film-card/film-card';
 import Footer from '../../components/footer/footer';
-import Logo from '../../components/footer/logo/logo';
+import HeaderUserBlock from '../../components/header-user-block/header-user-block';
+import Logo from '../../components/logo/logo';
 
 type MainScreenProps = {
   filmsCount: number;
@@ -28,17 +29,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
 
         <header className="page-header film-card__head">
           <Logo />
-
-          <ul className="user-block">
-            <li className="user-block__item">
-              <div className="user-block__avatar">
-                <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
-              </div>
-            </li>
-            <li className="user-block__item">
-              <a className="user-block__link">Sign out</a>
-            </li>
-          </ul>
+          <HeaderUserBlock />
         </header>
 
         <div className="film-card__wrap">
