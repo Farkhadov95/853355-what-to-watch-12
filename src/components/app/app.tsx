@@ -77,8 +77,6 @@ function App({filmsCount, mainFilm, mainGenre, mainYear}: MainScreenProps): JSX.
         />
       </Routes>
     </BrowserRouter>
-
-
   );
 }
 
