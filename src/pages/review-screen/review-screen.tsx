@@ -1,7 +1,7 @@
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
 
-function AddReviewScreen(): JSX.Element {
+function ReviewScreen(): JSX.Element {
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
@@ -83,4 +83,4 @@ function AddReviewScreen(): JSX.Element {
   );
 }
 
-export default AddReviewScreen;
+export default ReviewScreen;
