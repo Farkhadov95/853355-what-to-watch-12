@@ -5,7 +5,7 @@ type FilmsCatalogScreenProps = {
     films: Films;
 }
 
-function FilmsCatalogScreen(props: FilmsCatalogScreenProps):JSX.Element {
+function FilmsCatalogScreen({films}: FilmsCatalogScreenProps):JSX.Element {
   return(
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
@@ -44,7 +44,7 @@ function FilmsCatalogScreen(props: FilmsCatalogScreenProps):JSX.Element {
 
       <div className="catalog__films-list">
         {
-          props.films.map((film) => <FilmCard key={film.id} film={film} />)
+          films.map((film) => <FilmCard key={film.id} film={film} />)
         }
       </div>
 

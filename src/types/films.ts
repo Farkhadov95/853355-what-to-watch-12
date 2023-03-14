@@ -6,6 +6,7 @@ export type Film = {
     year: number;
     genre: string;
     imgSrc: string;
+    videoSrc: string;
 }
 
 export type FilmDescription = {
@@ -29,5 +30,6 @@ export type Review = {
     reviewDate: Date;
     reviewer: string;
 }
+
 
 export type Films = Film[];
