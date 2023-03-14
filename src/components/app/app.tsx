@@ -8,15 +8,16 @@ import PlayerScreen from '../../pages/player-screen.tsx/player-screen';
 import SignInScreen from '../../pages/sign-in-screen/sign-in-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
+import {Films} from '../../types/films';
 
 type MainScreenProps = {
-  filmsCount: number;
   mainFilm: string;
   mainGenre: string;
   mainYear: number;
+  films: Films;
 }
 
-function App({filmsCount, mainFilm, mainGenre, mainYear}: MainScreenProps): JSX.Element {
+function App({ mainFilm, mainGenre, mainYear, films}: MainScreenProps): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
@@ -24,10 +25,10 @@ function App({filmsCount, mainFilm, mainGenre, mainYear}: MainScreenProps): JSX.
           path={AppRoute.Root}
           element={
             <MainScreen
-              filmsCount = {filmsCount}
               mainFilm = {mainFilm}
               mainGenre = {mainGenre}
               mainYear = {mainYear}
+              films = {films}
             />
           }
         />
