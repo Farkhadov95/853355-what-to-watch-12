@@ -2,6 +2,7 @@ import React from 'react';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
 import { Film } from '../../types/films';
+import ReviewForm from '../../components/review-form/review-form';
 
 type AddReviewProps = {
   film: Film;
@@ -9,13 +10,6 @@ type AddReviewProps = {
 
 function AddReviewScreen({film}: AddReviewProps): JSX.Element {
   const {name, imgSrc} = film;
-  const [reviewText, setReviewText] = React.useState({
-    text: ''
-  });
-
-  // const handleSubmit = (evt: { preventDefault: () => void }) => {
-  //   evt.preventDefault();
-  // };
 
   return (
     <section className="film-card film-card--full">
@@ -49,7 +43,7 @@ function AddReviewScreen({film}: AddReviewProps): JSX.Element {
       </div>
 
       <div className="add-review">
-        <form action="#" className="add-review__form">
+        {/* <form action="#" className="add-review__form">
           <div className="rating">
             <div className="rating__stars">
               <input className="rating__input" id="star-10" type="radio" name="rating" value="10" />
@@ -97,7 +91,8 @@ function AddReviewScreen({film}: AddReviewProps): JSX.Element {
             </div>
 
           </div>
-        </form>
+        </form> */}
+        <ReviewForm />
       </div>
 
     </section>
