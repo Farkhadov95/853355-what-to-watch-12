@@ -11,6 +11,17 @@ type FilmOverviewProps = {
 }
 
 function FilmOverviewScreen({film, films}: FilmOverviewProps):JSX.Element {
+  const [hoveredFilmId, setHoveredFilmId] = React.useState<number | null>(null);
+
+
+  const handleMouseOver = (id: number) => {
+    setHoveredFilmId(id);
+  };
+
+  const handleMouseOut = () => {
+    setHoveredFilmId(null);
+  };
+
   return (
     <React.Fragment>
       <section className="film-card film-card--full">
@@ -99,7 +110,7 @@ function FilmOverviewScreen({film, films}: FilmOverviewProps):JSX.Element {
           <h2 className="catalog__title">More like this</h2>
           <div className="catalog__films-list">
             {
-              films.slice(0,4).map((item) => <FilmCard key={item.id} film={item} />)
+              films.map((filmItem) => <FilmCard key={filmItem.id} film={filmItem} isHovered={hoveredFilmId === filmItem.id} mouseOverHandler={handleMouseOver} mouseOutHandler={handleMouseOut}/>)
             }
           </div>
         </section>

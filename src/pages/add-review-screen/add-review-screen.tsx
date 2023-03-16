@@ -1,3 +1,4 @@
+import React from 'react';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
 import { Film } from '../../types/films';
@@ -8,6 +9,14 @@ type AddReviewProps = {
 
 function AddReviewScreen({film}: AddReviewProps): JSX.Element {
   const {name, imgSrc} = film;
+  const [reviewText, setReviewText] = React.useState({
+    text: ''
+  });
+
+  // const handleSubmit = (evt: { preventDefault: () => void }) => {
+  //   evt.preventDefault();
+  // };
+
   return (
     <section className="film-card film-card--full">
       <div className="film-card__header">
@@ -76,7 +85,13 @@ function AddReviewScreen({film}: AddReviewProps): JSX.Element {
           </div>
 
           <div className="add-review__text">
-            <textarea className="add-review__textarea" name="review-text" id="review-text" placeholder="Review text"></textarea>
+            <textarea className="add-review__textarea"
+              name="review-text" id="review-text"
+              placeholder="Review text"
+              onChange={(e) => setReviewText({text: e.target.value})}
+            >
+              {reviewText.text}
+            </textarea>
             <div className="add-review__submit">
               <button className="add-review__btn" type="submit">Post</button>
             </div>

@@ -19,7 +19,7 @@ export const films: Films = [
       reviews: reviews.filter((review) => review.movieName === 'Aviator'),
     },
     imgSrc: 'img/aviator.jpg',
-    videoSrc: 'video/the-flash-trailer-1_h480p.mov'
+    videoSrc: 'video/the-flash-trailer-1_h480p.mp4'
   },
   {
     id: 2,
@@ -38,7 +38,7 @@ export const films: Films = [
       reviews: reviews.filter((review) => review.movieName === 'The Grand Budapest Hotel'),
     },
     imgSrc: 'img/the-grand-budapest-hotel-poster.jpg',
-    videoSrc: 'video/the-flash-trailer-1_h480p.mov'
+    videoSrc: 'video/the-flash-trailer-1_h480p.mp4'
   },
   {
     id: 3,
@@ -57,7 +57,7 @@ export const films: Films = [
       reviews: reviews.filter((review) => review.movieName === 'The Grand Budapest Hotel'),
     },
     imgSrc: 'img/macbeth.jpg',
-    videoSrc: 'video/the-flash-trailer-1_h480p.mov'
+    videoSrc: 'video/the-flash-trailer-1_h480p.mp4'
   },
   {
     id: 4,
@@ -76,7 +76,7 @@ export const films: Films = [
       reviews: reviews.filter((review) => review.movieName === 'The Grand Budapest Hotel'),
     },
     imgSrc: 'img/shutter-island.jpg',
-    videoSrc: 'video/the-flash-trailer-1_h480p.mov'
+    videoSrc: 'video/the-flash-trailer-1_h480p.mp4'
   },
   {
     id: 5,
@@ -95,7 +95,7 @@ export const films: Films = [
       reviews: reviews.filter((review) => review.movieName === 'The Grand Budapest Hotel'),
     },
     imgSrc: 'img/we-need-to-talk-about-kevin.jpg',
-    videoSrc: 'video/the-flash-trailer-1_h480p.mov'
+    videoSrc: 'video/the-flash-trailer-1_h480p.mp4'
   },
   {
     id: 6,
@@ -114,7 +114,7 @@ export const films: Films = [
       reviews: reviews.filter((review) => review.movieName === 'The Grand Budapest Hotel'),
     },
     imgSrc: 'img/what-we-do-in-the-shadows.jpg',
-    videoSrc: 'video/the-flash-trailer-1_h480p.mov'
+    videoSrc: 'video/the-flash-trailer-1_h480p.mp4'
   },
   {
     id: 7,
@@ -133,7 +133,7 @@ export const films: Films = [
       reviews: reviews.filter((review) => review.movieName === 'The Grand Budapest Hotel'),
     },
     imgSrc: 'img/revenant.jpg',
-    videoSrc: 'video/the-flash-trailer-1_h480p.mov'
+    videoSrc: 'video/the-flash-trailer-1_h480p.mp4'
   },
   {
     id: 8,
@@ -152,7 +152,7 @@ export const films: Films = [
       reviews: reviews.filter((review) => review.movieName === 'The Grand Budapest Hotel'),
     },
     imgSrc: 'img/johnny-english.jpg',
-    videoSrc: 'video/the-flash-trailer-1_h480p.mov'
+    videoSrc: 'video/the-flash-trailer-1_h480p.mp4'
   }
 
 

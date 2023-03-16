@@ -1,3 +1,4 @@
+import React from 'react';
 import FilmCard from '../../components/film-card/film-card';
 import Footer from '../../components/footer/footer';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
@@ -9,6 +10,17 @@ type MyListProps = {
 }
 
 function MyListScreen({films}: MyListProps): JSX.Element {
+  const [hoveredFilmId, setHoveredFilmId] = React.useState<number | null>(null);
+
+
+  const handleMouseOver = (id: number) => {
+    setHoveredFilmId(id);
+  };
+
+  const handleMouseOut = () => {
+    setHoveredFilmId(null);
+  };
+
   return (
     <div className="user-page">
       <header className="page-header user-page__head">
@@ -22,7 +34,7 @@ function MyListScreen({films}: MyListProps): JSX.Element {
 
         <div className="catalog__films-list">
           {
-            films.map((film) => <FilmCard key={film.id} film={film} />)
+            films.map((film) => <FilmCard key={film.id} film={film} isHovered={hoveredFilmId === film.id} mouseOverHandler={handleMouseOver} mouseOutHandler={handleMouseOut}/>)
           }
         </div>
       </section>
