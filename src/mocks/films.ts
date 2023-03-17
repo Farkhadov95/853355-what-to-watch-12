@@ -154,6 +154,4 @@ export const films: Films = [
     imgSrc: 'img/johnny-english.jpg',
     videoSrc: 'video/the-flash-trailer-1_h480p.mp4'
   }
-
-
 ];

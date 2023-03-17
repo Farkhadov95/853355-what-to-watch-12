@@ -56,9 +56,16 @@ function FilmsCatalogScreen({films}: FilmsCatalogScreenProps):JSX.Element {
 
       <div className="catalog__films-list">
         {
-          films.map((film) =>
-            <FilmCard key={film.id} film={film} isHovered={hoveredFilmId === film.id} mouseOverHandler={handleMouseOver} mouseOutHandler={handleMouseOut}></FilmCard>
-          )
+          films.map((filmItem) =>
+            (
+              <FilmCard
+                key={filmItem.id}
+                film={filmItem}
+                isHovered={hoveredFilmId === filmItem.id}
+                mouseOverHandler={handleMouseOver}
+                mouseOutHandler={handleMouseOut}
+              />
+            ))
         }
       </div>
 
