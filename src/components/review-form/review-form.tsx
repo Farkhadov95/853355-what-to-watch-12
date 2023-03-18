@@ -5,19 +5,14 @@ import RatingStar from '../rating-star/rating-star';
 function ReviewForm(): JSX.Element {
   const starsCount = Array.from({length: 10}, (_, i) => (10 - i));
   const [reviewInfo, setReviewInfo] = React.useState({
-    starID: '',
-    text: '',
+    'rating': '',
+    'review-text': '',
   });
 
   const onChangeHandler = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement >) => {
     evt.persist();
-    const { name, id, value } = evt.target;
-
-    if (name === 'rating') {
-      setReviewInfo({...reviewInfo, starID: String(id)});
-    } else {
-      setReviewInfo({...reviewInfo, text: String(value)});
-    }
+    const { name, value } = evt.target;
+    setReviewInfo({...reviewInfo, [name]: value});
   };
 
   return (
@@ -29,7 +24,7 @@ function ReviewForm(): JSX.Element {
               <RatingStar key={i}
                 orderNumber={i}
                 changeHandler={onChangeHandler}
-                currentStateID={reviewInfo.starID}
+                currentStateID={reviewInfo['rating']}
               />
             ))
           }
@@ -38,11 +33,12 @@ function ReviewForm(): JSX.Element {
 
       <div className="add-review__text">
         <textarea className="add-review__textarea"
-          name="review-text" id="review-text"
+          name="review-text"
+          id="review-text"
           placeholder="Review text"
           onChange={onChangeHandler}
         >
-          {reviewInfo.text}
+          {reviewInfo['review-text']}
         </textarea>
         <div className="add-review__submit">
           <button className="add-review__btn" type="submit">Post</button>

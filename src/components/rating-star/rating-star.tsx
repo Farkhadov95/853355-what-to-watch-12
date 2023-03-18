@@ -16,7 +16,7 @@ function RatingStar({orderNumber, changeHandler, currentStateID}: RatingStarProp
         name="rating"
         value={orderNumber}
         onChange={changeHandler}
-        checked={currentStateID === `star-${orderNumber}`}
+        checked={currentStateID === `${orderNumber}`}
       />
       <label className="rating__label" htmlFor={`star-${orderNumber}`}>{`Rating ${orderNumber}`}</label>
     </>

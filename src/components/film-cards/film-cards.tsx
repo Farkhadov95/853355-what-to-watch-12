@@ -9,7 +9,6 @@ type FilmCardsProps = {
 function FilmCards({films}: FilmCardsProps): JSX.Element {
   const [hoveredFilmId, setHoveredFilmId] = React.useState<number | null>(null);
 
-
   const handleMouseOver = (id: number) => {
     setHoveredFilmId(id);
   };
@@ -17,6 +16,7 @@ function FilmCards({films}: FilmCardsProps): JSX.Element {
   const handleMouseOut = () => {
     setHoveredFilmId(null);
   };
+
   return (
     <>
       {films.map((filmItem) => (
