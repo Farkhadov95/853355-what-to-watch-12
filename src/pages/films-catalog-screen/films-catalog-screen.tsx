@@ -1,22 +1,12 @@
 import { Films } from '../../types/films';
-import FilmCard from '../../components/film-card/film-card';
 import React from 'react';
+import FilmCards from '../../components/film-cards/film-cards';
 
 type FilmsCatalogScreenProps = {
     films: Films;
 }
 
 function FilmsCatalogScreen({films}: FilmsCatalogScreenProps):JSX.Element {
-  const [hoveredFilmId, setHoveredFilmId] = React.useState<number | null>(null);
-
-
-  const handleMouseOver = (id: number) => {
-    setHoveredFilmId(id);
-  };
-
-  const handleMouseOut = () => {
-    setHoveredFilmId(null);
-  };
 
   return(
     <section className="catalog">
@@ -55,18 +45,7 @@ function FilmsCatalogScreen({films}: FilmsCatalogScreenProps):JSX.Element {
       </ul>
 
       <div className="catalog__films-list">
-        {
-          films.map((filmItem) =>
-            (
-              <FilmCard
-                key={filmItem.id}
-                film={filmItem}
-                isHovered={hoveredFilmId === filmItem.id}
-                mouseOverHandler={handleMouseOver}
-                mouseOutHandler={handleMouseOut}
-              />
-            ))
-        }
+        <FilmCards films={films}/>
       </div>
 
       <div className="catalog__more">

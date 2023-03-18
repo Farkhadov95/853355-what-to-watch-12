@@ -1,9 +1,8 @@
-import React from 'react';
 import Footer from '../../components/footer/footer';
 import { Film, Films } from '../../types/films';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
-import FilmCard from '../../components/film-card/film-card';
+import FilmCards from '../../components/film-cards/film-cards';
 
 type FilmOverviewProps = {
   films: Films;
@@ -11,16 +10,6 @@ type FilmOverviewProps = {
 }
 
 function FilmOverviewScreen({film, films}: FilmOverviewProps):JSX.Element {
-  const [hoveredFilmId, setHoveredFilmId] = React.useState<number | null>(null);
-
-  const handleMouseOver = (id: number) => {
-    setHoveredFilmId(id);
-  };
-
-  const handleMouseOut = () => {
-    setHoveredFilmId(null);
-  };
-
   return (
     <>
       <section className="film-card film-card--full">
@@ -108,18 +97,7 @@ function FilmOverviewScreen({film, films}: FilmOverviewProps):JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
           <div className="catalog__films-list">
-            {
-              films.map((filmItem) =>
-                (
-                  <FilmCard
-                    key={filmItem.id}
-                    film={filmItem}
-                    isHovered={hoveredFilmId === filmItem.id}
-                    mouseOverHandler={handleMouseOver}
-                    mouseOutHandler={handleMouseOut}
-                  />
-                ))
-            }
+            <FilmCards films={films}/>
           </div>
         </section>
         <Footer />

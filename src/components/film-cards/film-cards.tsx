@@ -1,25 +1,33 @@
-import { films } from '../../mocks/films';
+import React from 'react';
+import { Films } from '../../types/films';
 import FilmCard from '../film-card/film-card';
 
 type FilmCardsProps = {
-  hoveredFilmId: number;
-  overHandler: (id: number) => void;
-  OutHandler: () => void;
+  films: Films;
 }
 
-function FilmCards({hoveredFilmId, overHandler, OutHandler}: FilmCardsProps): JSX.Element {
+function FilmCards({films}: FilmCardsProps): JSX.Element {
+  const [hoveredFilmId, setHoveredFilmId] = React.useState<number | null>(null);
+
+
+  const handleMouseOver = (id: number) => {
+    setHoveredFilmId(id);
+  };
+
+  const handleMouseOut = () => {
+    setHoveredFilmId(null);
+  };
   return (
-    // films.map((filmItem) =>
-    //   (
-    //     <FilmCard
-    //       key={filmItem.id}
-    //       film={filmItem}
-    //       isHovered={hoveredFilmId === filmItem.id}
-    //       mouseOverHandler={overHandler}
-    //       mouseOutHandler={OutHandler}
-    //     />
-    //   ))
     <>
+      {films.map((filmItem) => (
+        <FilmCard
+          key={filmItem.id}
+          film={filmItem}
+          isHovered={hoveredFilmId === filmItem.id}
+          mouseOverHandler={handleMouseOver}
+          mouseOutHandler={handleMouseOut}
+        />
+      ))}
     </>
   );
 }
