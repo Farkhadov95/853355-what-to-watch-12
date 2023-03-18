@@ -1,4 +1,3 @@
-import React from 'react';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
 import { Film } from '../../types/films';
