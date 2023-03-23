@@ -33,4 +33,3 @@ function FilmCards({films}: FilmCardsProps): JSX.Element {
 }
 
 export default FilmCards;
-
