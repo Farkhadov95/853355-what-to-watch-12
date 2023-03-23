@@ -1,4 +1,51 @@
-import { useEffect, useRef } from 'react';
+// import { useEffect, useRef } from 'react';
+// import { Film } from '../../types/films';
+
+// type playerProps = {
+//   film: Film;
+//   isActive: boolean;
+// };
+
+// function MiniPlayer({film, isActive}: playerProps) {
+//   const videoRef = useRef<HTMLVideoElement | null>(null);
+
+//   useEffect(() => {
+//     if(videoRef.current === null) {
+//       return;
+//     }
+
+//     videoRef.current.addEventListener('loadeddata', () => {
+//       if(videoRef.current === null) {
+//         return;
+//       }
+//       videoRef.current.play();
+//     });
+
+//     return videoRef.current.removeEventListener('loadeddata', () => {
+//       if(videoRef.current === null) {
+//         return;
+//       }
+//       videoRef.current.play();
+//     });
+
+//   }, [isActive, videoRef]);
+
+//   return (
+//     <video
+//       ref={videoRef}
+//       width="280"
+//       height="175"
+//       autoPlay
+//       muted
+//     >
+//       <source src={film.videoSrc} type="video/mp4" />
+//     </video>
+//   );
+// }
+
+// export default MiniPlayer;
+
+import { useEffect, useRef, useState } from 'react';
 import { Film } from '../../types/films';
 
 type playerProps = {
@@ -30,17 +77,40 @@ function MiniPlayer({film, isActive}: playerProps) {
 
   }, [isActive, videoRef]);
 
+  const [showVideo, setShowVideo] = useState(false);
+
+  useEffect(() => {
+    let timeoutId: NodeJS.Timeout | null = null;
+    if (isActive) {
+      timeoutId = setTimeout(() => {
+        setShowVideo(true);
+      }, 1000);
+    } else {
+      setShowVideo(false);
+    }
+
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId);
+      }
+    };
+  }, [isActive]);
+
   return (
-    <video
-      ref={videoRef}
-      width="280"
-      height="175"
-      autoPlay
-      muted
-    >
-      <source src={film.videoSrc} type="video/mp4" />
-    </video>
+    showVideo ?
+      <video
+        ref={videoRef}
+        width="280"
+        height="175"
+        autoPlay
+        muted
+      >
+        <source src={film.videoSrc} type="video/mp4" />
+      </video>
+      :
+      <img src={film.imgSrc} alt="name" width="280" height="175" />
   );
 }
 
 export default MiniPlayer;
+
