@@ -12,7 +12,7 @@ type FilmCardProps = {
 }
 
 function FilmCard({film, isActive = false, mouseOverHandler, mouseOutHandler}: FilmCardProps): JSX.Element {
-  const {name, imgSrc, videoSrc} = film;
+  const {name, imgSrc} = film;
 
   const [showVideo, setShowVideo] = useState(false);
 
@@ -41,7 +41,7 @@ function FilmCard({film, isActive = false, mouseOverHandler, mouseOutHandler}: F
       >
         {
           showVideo ?
-            <MiniPlayer videoSrc={videoSrc} isActive={isActive}/>
+            <MiniPlayer film={film} isActive={isActive}/>
             : <img src={imgSrc} alt="name" width="280" height="175" />
         }
       </div>

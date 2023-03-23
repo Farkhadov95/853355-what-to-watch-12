@@ -1,11 +1,12 @@
 import { useEffect, useRef } from 'react';
+import { Film } from '../../types/films';
 
 type playerProps = {
-  videoSrc: string;
+  film: Film;
   isActive: boolean;
 };
 
-function MiniPlayer({videoSrc, isActive}: playerProps) {
+function MiniPlayer({film, isActive}: playerProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
@@ -30,8 +31,14 @@ function MiniPlayer({videoSrc, isActive}: playerProps) {
   }, [isActive, videoRef]);
 
   return (
-    <video ref={videoRef} width="280" height="175" autoPlay muted>
-      <source src={videoSrc} type="video/mp4" />
+    <video
+      ref={videoRef}
+      width="280"
+      height="175"
+      autoPlay
+      muted
+    >
+      <source src={film.videoSrc} type="video/mp4" />
     </video>
   );
 }
