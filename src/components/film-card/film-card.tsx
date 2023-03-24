@@ -1,26 +1,27 @@
 import { Link } from 'react-router-dom';
 import { Film } from '../../types/films';
+import MiniPlayer from '../mini-player/mini-player';
+
 
 type FilmCardProps = {
   film: Film;
-  isHovered: boolean;
+  isActive: boolean;
   mouseOverHandler: (id: number) => void;
   mouseOutHandler: () => void;
 }
 
-function FilmCard({film, isHovered = false, mouseOverHandler, mouseOutHandler}: FilmCardProps): JSX.Element {
-  const {name, imgSrc, videoSrc} = film;
+function FilmCard({film, isActive = false, mouseOverHandler, mouseOutHandler}: FilmCardProps): JSX.Element {
+
   return (
     <article className="small-film-card catalog__films-card">
-      <div className="small-film-card__image" onMouseOver={() => mouseOverHandler(film.id)} onMouseOut={()=> mouseOutHandler()}>
-        {
-          isHovered ?
-            <video src={videoSrc} width="280" height="175" autoPlay />
-            : <img src={imgSrc} alt="name" width="280" height="175" />
-        }
+      <div className="small-film-card__image"
+        onMouseOver={() => mouseOverHandler(film.id)}
+        onMouseOut={()=> mouseOutHandler()}
+      >
+        <MiniPlayer film={film} isActive={isActive}/>
       </div>
       <h3 className="small-film-card__title">
-        <Link to='film' className="small-film-card__link">{name}</Link>
+        <Link to='film' className="small-film-card__link">{film.name}</Link>
       </h3>
     </article>
   );
