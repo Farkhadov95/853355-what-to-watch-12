@@ -2,13 +2,12 @@ import FilmCards from '../../components/film-cards/film-cards';
 import Footer from '../../components/footer/footer';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
-import { Films } from '../../types/films';
+import { useAppSelector } from '../../hooks';
 
-type MyListProps = {
-  films: Films;
-}
 
-function MyListScreen({films}: MyListProps): JSX.Element {
+function MyListScreen(): JSX.Element {
+  const films = useAppSelector((state) => state.films);
+
   return (
     <div className="user-page">
       <header className="page-header user-page__head">

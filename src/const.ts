@@ -13,3 +13,7 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN'
 }
 
+export enum Genres {
+  AllGenres = 'All genres'
+}
+

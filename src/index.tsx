@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
 import App from './components/app/app';
-import { films } from './mocks/films';
 import { store } from './store';
 
 const MainScreenSettings = {
@@ -22,7 +21,6 @@ root.render(
         mainFilm = {MainScreenSettings.MainFilm}
         mainGenre = {MainScreenSettings.MainGenre}
         mainYear = {MainScreenSettings.MainYear}
-        films = {films}
       />
     </Provider>
   </React.StrictMode>,

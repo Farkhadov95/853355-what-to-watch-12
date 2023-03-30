@@ -13,17 +13,6 @@ const initialState: State = {
   films: films
 };
 
-// eslint-disable-next-line no-console
-// console.log();
-
-// function filterMoviesByGenre(genre: string): Films {
-//   const filteredMovies = films.filter((movie) => movie.genre === genre);
-//   // eslint-disable-next-line no-console
-//   console.log(filteredMovies);
-//   return filteredMovies;
-// }
-
-
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(setGenre, (state, action) => {

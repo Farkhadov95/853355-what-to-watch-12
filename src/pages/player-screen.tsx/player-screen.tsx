@@ -1,10 +1,8 @@
-import { Film } from '../../types/films';
+import { useAppSelector } from '../../hooks';
 
-type PlayerScreenProps = {
-  film: Film;
-}
+function PlayerScreen(): JSX.Element {
+  const film = useAppSelector((state) => state.films)[0];
 
-function PlayerScreen({film}: PlayerScreenProps): JSX.Element {
   const {name, videoSrc} = film;
   return (
     <div className="player">
