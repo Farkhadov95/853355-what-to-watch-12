@@ -20,9 +20,6 @@ function FilmsCatalogScreen():JSX.Element {
 
   const availableGenres = [...new Set(films.map((film) => film.genre))];
 
-  // eslint-disable-next-line no-console
-  console.log(selectedGenre);
-
   const onGenreChange = (chosenGenre: string) => {
     dispatch(setGenre(chosenGenre));
   };
