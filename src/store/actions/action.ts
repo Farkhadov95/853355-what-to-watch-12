@@ -1,4 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
+// import { State } from '../../types/state';
 
-export const changeGenre = createAction('changeGenre');
-export const resetGenre = createAction('resetGenre');
+export const setGenre = createAction<string>('set_genre');
+export const setDefaultGenre = createAction('set_default_genre');

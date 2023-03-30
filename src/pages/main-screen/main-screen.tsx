@@ -3,14 +3,12 @@ import { Link } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
-import { Films } from '../../types/films';
 import FilmsCatalogScreen from '../films-catalog-screen/films-catalog-screen';
 
 type MainScreenProps = {
   mainFilm: string;
   mainGenre: string;
   mainYear: number;
-  films: Films;
 }
 
 function MainScreen(props: MainScreenProps): JSX.Element {
@@ -63,7 +61,7 @@ function MainScreen(props: MainScreenProps): JSX.Element {
         </div>
       </section>
       <div className="page-content">
-        <FilmsCatalogScreen films={props.films} />
+        <FilmsCatalogScreen />
         <Footer />
       </div>
     </React.Fragment>

@@ -27,7 +27,7 @@ export type Review = {
   text: string;
   rating: number;
   ratingCategory: string;
-  reviewDate: Date;
+  reviewDate: string;
   reviewer: string;
 }
 

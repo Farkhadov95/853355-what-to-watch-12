@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { films } from '../../mocks/films';
 import { Films } from '../../types/films';
-import { changeGenre, resetGenre } from '../actions/action';
+import { setGenre } from '../actions/action';
 
 type State = {
   genre: string;
@@ -26,11 +26,8 @@ const initialState: State = {
 
 const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(changeGenre, (state) => {
-      state.genre = 'Comedy';
-    })
-    .addCase(resetGenre, (state) => {
-      state.genre = 'All genres';
+    .addCase(setGenre, (state, action) => {
+      state.genre = action.payload;
     });
 });
 

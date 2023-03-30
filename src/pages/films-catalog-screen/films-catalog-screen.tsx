@@ -1,60 +1,36 @@
-import { Films } from '../../types/films';
 import FilmCards from '../../components/film-cards/film-cards';
+import GenreItem from '../../components/genre-item/genre-item';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeGenre, resetGenre } from '../../store/actions/action';
+import { setGenre } from '../../store/actions/action';
 
-type FilmsCatalogScreenProps = {
-    films: Films;
-}
+function FilmsCatalogScreen():JSX.Element {
 
-function FilmsCatalogScreen({films}: FilmsCatalogScreenProps):JSX.Element {
-
-  const filmsByGenre = useAppSelector((state) => state.films);
+  const films = useAppSelector((state) => state.films);
   const selectedGenre = useAppSelector((state) => state.genre);
   const dispatch = useAppDispatch();
+  const filmsByGenre = films.filter((film) => film.genre === selectedGenre);
+
+  const availableGenres = [...new Set(films.map((film) => film.genre))];
 
   // eslint-disable-next-line no-console
   console.log(selectedGenre);
 
-  // const onGenreChange = () => {
-  //   // eslint-disable-next-line no-console
-  //   dispatch(changeGenre);
-  // };
+  const onGenreChange = (chosenGenre: string) => {
+    dispatch(setGenre(chosenGenre));
+  };
+
 
   return(
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
       <ul className="catalog__genres-list">
-        <li className="catalog__genres-item catalog__genres-item--active">
-          <a href="#" className="catalog__genres-link" onClick={() => dispatch(resetGenre)}>All genres</a>
-        </li>
         <li className="catalog__genres-item">
-          <a href="#" className="catalog__genres-link" onClick={() => dispatch(changeGenre)}>Comedies</a>
+          <a href="#" className="catalog__genres-link" onClick={() => onGenreChange('All genres')}>All genres</a>
         </li>
-        <li className="catalog__genres-item">
-          <a href="#" className="catalog__genres-link">Crime</a>
-        </li>
-        <li className="catalog__genres-item">
-          <a href="#" className="catalog__genres-link">Documentary</a>
-        </li>
-        <li className="catalog__genres-item">
-          <a href="#" className="catalog__genres-link">Dramas</a>
-        </li>
-        <li className="catalog__genres-item">
-          <a href="#" className="catalog__genres-link">Horror</a>
-        </li>
-        <li className="catalog__genres-item">
-          <a href="#" className="catalog__genres-link">Kids & Family</a>
-        </li>
-        <li className="catalog__genres-item">
-          <a href="#" className="catalog__genres-link">Romance</a>
-        </li>
-        <li className="catalog__genres-item">
-          <a href="#" className="catalog__genres-link">Sci-Fi</a>
-        </li>
-        <li className="catalog__genres-item">
-          <a href="#" className="catalog__genres-link">Thrillers</a>
-        </li>
+        {
+          availableGenres.map((genre) =>
+            <GenreItem key={genre} genre={genre} isActive={selectedGenre === genre} />)
+        }
       </ul>
 
       <div className="catalog__films-list">

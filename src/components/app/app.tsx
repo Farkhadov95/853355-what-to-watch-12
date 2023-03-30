@@ -28,7 +28,6 @@ function App({ mainFilm, mainGenre, mainYear, films}: MainScreenProps): JSX.Elem
               mainFilm = {mainFilm}
               mainGenre = {mainGenre}
               mainYear = {mainYear}
-              films = {films}
             />
           }
         />
