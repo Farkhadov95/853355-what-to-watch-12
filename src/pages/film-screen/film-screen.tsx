@@ -8,7 +8,13 @@ import { filmSelector } from '../../store/selectors';
 
 function FilmOverviewScreen():JSX.Element {
   const films = useAppSelector(filmSelector);
+
+  if (films === undefined) {
+    return <div>Loading...</div>;
+  }
+
   const film = films[0];
+
   return (
     <>
       <section className="film-card film-card--full">

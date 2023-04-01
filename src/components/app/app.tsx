@@ -9,24 +9,14 @@ import SignInScreen from '../../pages/sign-in-screen/sign-in-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 
-type MainScreenProps = {
-  mainFilm: string;
-  mainGenre: string;
-  mainYear: number;
-}
-
-function App({ mainFilm, mainGenre, mainYear}: MainScreenProps): JSX.Element {
+function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Routes>
         <Route
           path={AppRoute.Root}
           element={
-            <MainScreen
-              mainFilm = {mainFilm}
-              mainGenre = {mainGenre}
-              mainYear = {mainYear}
-            />
+            <MainScreen />
           }
         />
         <Route

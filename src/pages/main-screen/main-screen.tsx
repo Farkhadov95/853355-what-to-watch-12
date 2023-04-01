@@ -3,15 +3,20 @@ import { Link } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
+import { useAppSelector } from '../../hooks';
+import { filmSelector } from '../../store/selectors';
 import FilmsCatalogScreen from '../films-catalog-screen/films-catalog-screen';
 
-type MainScreenProps = {
-  mainFilm: string;
-  mainGenre: string;
-  mainYear: number;
-}
 
-function MainScreen(props: MainScreenProps): JSX.Element {
+function MainScreen(): JSX.Element {
+  const film = useAppSelector(filmSelector)[1];
+
+  if (film === undefined) {
+    return <div>Loading...</div>;
+  }
+
+  const {name, genre, year} = film;
+
   return (
     <React.Fragment>
       <section className="film-card">
@@ -29,10 +34,10 @@ function MainScreen(props: MainScreenProps): JSX.Element {
               <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
             </div>
             <div className="film-card__desc">
-              <h2 className="film-card__title">{props.mainFilm}</h2>
+              <h2 className="film-card__title">{name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{props.mainGenre}</span>
-                <span className="film-card__year">{props.mainYear}</span>
+                <span className="film-card__genre">{genre}</span>
+                <span className="film-card__year">{year}</span>
               </p>
               <div className="film-card__buttons">
                 <Link to='player' title='player' style={{textDecoration: 'none'}}>

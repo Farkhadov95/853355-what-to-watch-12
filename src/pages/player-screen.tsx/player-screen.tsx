@@ -4,6 +4,10 @@ import { filmSelector } from '../../store/selectors';
 function PlayerScreen(): JSX.Element {
   const film = useAppSelector(filmSelector)[0];
 
+  if (film === undefined) {
+    return <div>Loading...</div>;
+  }
+
   const {name, videoSrc} = film;
   return (
     <div className="player">
