@@ -7,6 +7,11 @@ import { filmSelector } from '../../store/selectors';
 
 function AddReviewScreen(): JSX.Element {
   const film = useAppSelector(filmSelector)[0];
+
+  if (film === undefined) {
+    return <div>Loading...</div>;
+  }
+
   const {name, imgSrc} = film;
 
   return (

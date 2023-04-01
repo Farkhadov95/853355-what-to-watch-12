@@ -9,17 +9,21 @@ type GenreItemProp = {
 
 function GenreItem({genre, isActive}: GenreItemProp): JSX.Element {
   const dispatch = useAppDispatch();
-  const classes = classNames('catalog__genres-item', {
-    'catalog__genres-item--active':isActive
-  });
 
-  const onGenreChange = (chosenGenre: string) => {
-    dispatch(setGenre(chosenGenre));
+  const handleChange = () => {
+    dispatch(setGenre(genre));
   };
 
   return (
-    <li className={classes}>
-      <a href="#" className="catalog__genres-link" onClick={() => onGenreChange(genre)}>{genre}</a>
+    <li className={classNames('catalog__genres-item',
+      {'catalog__genres-item--active':isActive})}
+    >
+      <a href="#"
+        className="catalog__genres-link"
+        onClick={handleChange}
+      >
+        {genre}
+      </a>
     </li>
   );
 }
