@@ -12,7 +12,6 @@ type MainScreenProps = {
 }
 
 function MainScreen(props: MainScreenProps): JSX.Element {
-
   return (
     <React.Fragment>
       <section className="film-card">

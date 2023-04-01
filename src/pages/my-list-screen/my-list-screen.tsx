@@ -3,10 +3,11 @@ import Footer from '../../components/footer/footer';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
 import { useAppSelector } from '../../hooks';
+import { filmSelector } from '../../store/selectors';
 
 
 function MyListScreen(): JSX.Element {
-  const films = useAppSelector((state) => state.films);
+  const films = useAppSelector(filmSelector);
 
   return (
     <div className="user-page">

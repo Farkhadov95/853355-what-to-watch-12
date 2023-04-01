@@ -2,10 +2,11 @@ import HeaderUserBlock from '../../components/header-user-block/header-user-bloc
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import { useAppSelector } from '../../hooks';
+import { filmSelector } from '../../store/selectors';
 
 
 function AddReviewScreen(): JSX.Element {
-  const film = useAppSelector((state) => state.films)[0];
+  const film = useAppSelector(filmSelector)[0];
   const {name, imgSrc} = film;
 
   return (

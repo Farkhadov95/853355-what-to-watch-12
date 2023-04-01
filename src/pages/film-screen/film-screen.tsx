@@ -3,10 +3,11 @@ import HeaderUserBlock from '../../components/header-user-block/header-user-bloc
 import Logo from '../../components/logo/logo';
 import FilmCards from '../../components/film-cards/film-cards';
 import { useAppSelector } from '../../hooks';
+import { filmSelector } from '../../store/selectors';
 
 
 function FilmOverviewScreen():JSX.Element {
-  const films = useAppSelector((state) => state.films);
+  const films = useAppSelector(filmSelector);
   const film = films[0];
   return (
     <>

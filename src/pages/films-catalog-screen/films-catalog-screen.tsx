@@ -1,41 +1,27 @@
-import classNames from 'classnames';
 import FilmCards from '../../components/film-cards/film-cards';
 import GenreItem from '../../components/genre-item/genre-item';
-import { Genres } from '../../const';
-import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setGenre } from '../../store/actions/action';
+import { DEFAULT_GENRE } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { filmSelector, genreSelector } from '../../store/selectors';
 
 function FilmsCatalogScreen():JSX.Element {
 
-  const films = useAppSelector((state) => state.films);
-  const selectedGenre = useAppSelector((state) => state.genre);
-  const dispatch = useAppDispatch();
+  const films = useAppSelector(filmSelector);
+  const selectedGenre = useAppSelector(genreSelector);
 
   const filmsToDisplay = () => {
-    if (selectedGenre === Genres.AllGenres) {
+    if (selectedGenre === DEFAULT_GENRE) {
       return films;
     }
     return films.filter((film) => film.genre === selectedGenre);
   };
 
-  const availableGenres = [...new Set(films.map((film) => film.genre))];
-
-  const onGenreChange = (chosenGenre: string) => {
-    dispatch(setGenre(chosenGenre));
-  };
-
-  const allGenreClass = classNames('catalog__genres-item', {
-    'catalog__genres-item--active': (selectedGenre === Genres.AllGenres)
-  });
-
+  const availableGenres = [DEFAULT_GENRE, ...new Set(films.map((film) => film.genre))];
 
   return(
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
       <ul className="catalog__genres-list">
-        <li className={allGenreClass}>
-          <a href="#" className="catalog__genres-link" onClick={() => onGenreChange(Genres.AllGenres)}>All genres</a>
-        </li>
         {
           availableGenres.map((genre) =>
             <GenreItem key={genre} genre={genre} isActive={selectedGenre === genre} />)
