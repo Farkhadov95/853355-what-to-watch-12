@@ -9,7 +9,7 @@ export const reviews: Review[] = [
     immersed himself in Hollywood`,
     rating: 8.9,
     ratingCategory: 'Good',
-    reviewDate: new Date(2005, 6, 10),
+    reviewDate: 'Sun Jul 10 2005',
     reviewer: 'Jessica Winter'
   },
   {
@@ -23,7 +23,7 @@ export const reviews: Review[] = [
       has been compared to Hitchcock and Lubitsch`,
     rating: 8.1,
     ratingCategory: 'Very Good',
-    reviewDate: new Date(2005, 6, 10),
+    reviewDate: 'Sun Jul 10 2005',
     reviewer: 'Jessica Winter'
   },
   {
@@ -33,7 +33,7 @@ export const reviews: Review[] = [
       has been compared to Hitchcock and Lubitsch`,
     rating: 8.2,
     ratingCategory: 'Good',
-    reviewDate: new Date(2014, 5, 6),
+    reviewDate: 'Sun Jul 10 2005',
     reviewer: 'Peter Bradsh'
   },
   {
@@ -44,7 +44,7 @@ export const reviews: Review[] = [
     immersed himself in Hollywood`,
     rating: 8.9,
     ratingCategory: 'Good',
-    reviewDate: new Date(2005, 6, 10),
+    reviewDate: 'Sun Jul 10 2005',
     reviewer: 'Jessica Winter'
   },
   {
@@ -55,7 +55,7 @@ export const reviews: Review[] = [
     immersed himself in Hollywood`,
     rating: 8.9,
     ratingCategory: 'Good',
-    reviewDate: new Date(2005, 6, 10),
+    reviewDate: 'Sun Jul 10 2005',
     reviewer: 'Jessica Winter'
   },
   {
@@ -66,7 +66,7 @@ export const reviews: Review[] = [
     immersed himself in Hollywood`,
     rating: 8.9,
     ratingCategory: 'Good',
-    reviewDate: new Date(2005, 6, 10),
+    reviewDate: 'Sun Jul 10 2005',
     reviewer: 'Jessica Winter'
   },
   {
@@ -77,7 +77,7 @@ export const reviews: Review[] = [
     immersed himself in Hollywood`,
     rating: 8.9,
     ratingCategory: 'Good',
-    reviewDate: new Date(2005, 6, 10),
+    reviewDate: 'Sun Jul 10 2005',
     reviewer: 'Jessica Winter'
   },
   {
@@ -88,7 +88,7 @@ export const reviews: Review[] = [
     immersed himself in Hollywood`,
     rating: 8.9,
     ratingCategory: 'Good',
-    reviewDate: new Date(2005, 6, 10),
+    reviewDate: 'Sun Jul 10 2005',
     reviewer: 'Jessica Winter'
   },
   {
@@ -99,7 +99,7 @@ export const reviews: Review[] = [
     immersed himself in Hollywood`,
     rating: 8.9,
     ratingCategory: 'Good',
-    reviewDate: new Date(2005, 6, 10),
+    reviewDate: 'Sun Jul 10 2005',
     reviewer: 'Jessica Winter'
   },
   {
@@ -110,7 +110,7 @@ export const reviews: Review[] = [
     immersed himself in Hollywood`,
     rating: 8.9,
     ratingCategory: 'Good',
-    reviewDate: new Date(2005, 6, 10),
+    reviewDate: 'Sun Jul 10 2005',
     reviewer: 'Jessica Winter'
   },
 
@@ -122,7 +122,7 @@ export const reviews: Review[] = [
     immersed himself in Hollywood`,
     rating: 6.0,
     ratingCategory: 'Not bad',
-    reviewDate: new Date(2005, 6, 10),
+    reviewDate: 'Sun Jul 10 2005',
     reviewer: 'Jessica Winter'
   },
 

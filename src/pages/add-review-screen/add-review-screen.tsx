@@ -1,13 +1,17 @@
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
-import { Film } from '../../types/films';
 import ReviewForm from '../../components/review-form/review-form';
+import { useAppSelector } from '../../hooks';
+import { filmSelector } from '../../store/selectors';
 
-type AddReviewProps = {
-  film: Film;
-}
 
-function AddReviewScreen({film}: AddReviewProps): JSX.Element {
+function AddReviewScreen(): JSX.Element {
+  const film = useAppSelector(filmSelector)[0];
+
+  if (film === undefined) {
+    return <div>Loading...</div>;
+  }
+
   const {name, imgSrc} = film;
 
   return (

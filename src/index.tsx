@@ -1,13 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import App from './components/app/app';
-import { films } from './mocks/films';
-
-const MainScreenSettings = {
-  MainFilm: 'The Grand Budapest Hotel',
-  MainGenre: 'Drama',
-  MainYear: 2014,
-} as const;
+import { store } from './store';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -15,12 +10,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App
-      mainFilm = {MainScreenSettings.MainFilm}
-      mainGenre = {MainScreenSettings.MainGenre}
-      mainYear = {MainScreenSettings.MainYear}
-      films = {films}
-
-    />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </React.StrictMode>,
 );

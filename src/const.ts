@@ -13,3 +13,5 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN'
 }
 
+export const DEFAULT_GENRE = 'All genres';
+

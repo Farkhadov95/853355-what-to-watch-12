@@ -1,15 +1,20 @@
 import Footer from '../../components/footer/footer';
-import { Film, Films } from '../../types/films';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
 import FilmCards from '../../components/film-cards/film-cards';
+import { useAppSelector } from '../../hooks';
+import { filmSelector } from '../../store/selectors';
 
-type FilmOverviewProps = {
-  films: Films;
-  film: Film;
-}
 
-function FilmOverviewScreen({film, films}: FilmOverviewProps):JSX.Element {
+function FilmOverviewScreen():JSX.Element {
+  const films = useAppSelector(filmSelector);
+
+  if (films === undefined) {
+    return <div>Loading...</div>;
+  }
+
+  const film = films[0];
+
   return (
     <>
       <section className="film-card film-card--full">
