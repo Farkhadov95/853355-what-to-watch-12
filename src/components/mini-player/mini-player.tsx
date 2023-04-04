@@ -58,10 +58,10 @@ function MiniPlayer({film, isActive}: playerProps) {
         autoPlay
         muted
       >
-        <source src={film.videoSrc} type="video/mp4" />
+        <source src={film.previewVideoLink} type="video/mp4" />
       </video>
       :
-      <img src={film.imgSrc} alt="name" width="280" height="175" />
+      <img src={film.previewImage} alt="name" width="280" height="175" />
   );
 }
 

@@ -10,12 +10,14 @@ import FilmsCatalogScreen from '../films-catalog-screen/films-catalog-screen';
 
 function MainScreen(): JSX.Element {
   const film = useAppSelector(filmSelector)[1];
+  // eslint-disable-next-line no-console
+  console.log(useAppSelector(filmSelector));
 
   if (film === undefined) {
     return <div>Loading...</div>;
   }
 
-  const {name, genre, year} = film;
+  const {name, genre, released} = film;
 
   return (
     <React.Fragment>
@@ -37,7 +39,7 @@ function MainScreen(): JSX.Element {
               <h2 className="film-card__title">{name}</h2>
               <p className="film-card__meta">
                 <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{year}</span>
+                <span className="film-card__year">{released}</span>
               </p>
               <div className="film-card__buttons">
                 <Link to='player' title='player' style={{textDecoration: 'none'}}>

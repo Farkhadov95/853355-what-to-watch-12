@@ -1,17 +1,18 @@
 import { useAppSelector } from '../../hooks';
 import { filmSelector } from '../../store/selectors';
+import { Film } from '../../types/films';
 
 function PlayerScreen(): JSX.Element {
-  const film = useAppSelector(filmSelector)[0];
+  const film: Film = useAppSelector(filmSelector)[0];
 
   if (film === undefined) {
     return <div>Loading...</div>;
   }
 
-  const {name, videoSrc} = film;
+  const {name, videoLink} = film;
   return (
     <div className="player">
-      <video src={videoSrc} className="player__video" poster="img/player-poster.jpg" autoPlay></video>
+      <video src={videoLink} className="player__video" poster="img/player-poster.jpg" autoPlay></video>
 
       <button type="button" className="player__exit">Exit</button>
 

@@ -4,6 +4,7 @@ import Logo from '../../components/logo/logo';
 import FilmCards from '../../components/film-cards/film-cards';
 import { useAppSelector } from '../../hooks';
 import { filmSelector } from '../../store/selectors';
+import { Film } from '../../types/films';
 
 
 function FilmOverviewScreen():JSX.Element {
@@ -13,7 +14,7 @@ function FilmOverviewScreen():JSX.Element {
     return <div>Loading...</div>;
   }
 
-  const film = films[0];
+  const film: Film = films[0];
 
   return (
     <>
@@ -35,7 +36,7 @@ function FilmOverviewScreen():JSX.Element {
               <h2 className="film-card__title">{film.name}</h2>
               <p className="film-card__meta">
                 <span className="film-card__genre">{film.genre}</span>
-                <span className="film-card__year">{film.year}</span>
+                <span className="film-card__year">{film.released}</span>
               </p>
 
               <div className="film-card__buttons">
@@ -61,7 +62,7 @@ function FilmOverviewScreen():JSX.Element {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={film.imgSrc} alt={film.name} width="218" height="327" />
+              <img src={film.previewImage} alt={film.name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
@@ -80,10 +81,10 @@ function FilmOverviewScreen():JSX.Element {
               </nav>
 
               <div className="film-rating">
-                <div className="film-rating__score">{film.rating.ratingTotal}</div>
+                <div className="film-rating__score">{film.rating}</div>
                 <p className="film-rating__meta">
-                  <span className="film-rating__level">{film.rating.ratingCategory}</span>
-                  <span className="film-rating__count">{film.rating.ratingVotes} ratings</span>
+                  <span className="film-rating__level">{film.scoresCount}</span>
+                  <span className="film-rating__count">{film.scoresCount} ratings</span>
                 </p>
               </div>
 

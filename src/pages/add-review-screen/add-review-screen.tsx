@@ -3,16 +3,17 @@ import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import { useAppSelector } from '../../hooks';
 import { filmSelector } from '../../store/selectors';
+import { Film } from '../../types/films';
 
 
 function AddReviewScreen(): JSX.Element {
-  const film = useAppSelector(filmSelector)[0];
+  const film: Film = useAppSelector(filmSelector)[0];
 
   if (film === undefined) {
     return <div>Loading...</div>;
   }
 
-  const {name, imgSrc} = film;
+  const {name, previewImage} = film;
 
   return (
     <section className="film-card film-card--full">
@@ -41,7 +42,7 @@ function AddReviewScreen(): JSX.Element {
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src={imgSrc} alt={name} width="218" height="327" />
+          <img src={previewImage} alt={name} width="218" height="327" />
         </div>
       </div>
 
