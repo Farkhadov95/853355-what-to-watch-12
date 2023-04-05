@@ -16,7 +16,18 @@ function App(): JSX.Element {
   const authorizationStatus = useAppSelector(authorizationStatusSelector);
   const isFilmsDataLoading = useAppSelector(isFilmsLoadingSelector);
 
-  if (authorizationStatus === AuthorizationStatus.Unknown || isFilmsDataLoading) {
+
+  // if (authorizationStatus === AuthorizationStatus.Unknown || isFilmsDataLoading) {
+  //   // eslint-disable-next-line no-console
+  //   console.log(`authorizationStatus ${authorizationStatus}, isFilmsDataLoading ${String(isFilmsDataLoading)}`);
+  //   return (
+  //     <LoadingScreen />
+  //   );
+  // }
+
+  if (isFilmsDataLoading) {
+    // eslint-disable-next-line no-console
+    console.log(`authorizationStatus ${authorizationStatus}, isFilmsDataLoading ${String(isFilmsDataLoading)}`);
     return (
       <LoadingScreen />
     );

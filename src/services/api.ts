@@ -1,7 +1,7 @@
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import {StatusCodes} from 'http-status-codes';
 import { processErrorHandle } from './process-error-handler';
-import { getToken } from './token';
+// import { getToken } from './token';
 
 const BASE_URL = 'https://12.react.pages.academy/wtw';
 const REQUEST_TIMEOUT = 5000;
@@ -20,16 +20,16 @@ export const createAPI = (): AxiosInstance => {
     timeout: REQUEST_TIMEOUT
   });
 
-  api.interceptors.request.use(
-    (config: AxiosRequestConfig) => {
-      const token = getToken();
+  // api.interceptors.request.use(
+  //   (config: AxiosRequestConfig) => {
+  //     const token = getToken();
 
-      if (token && config.headers) {
-        config.headers['x-token'] = token;
-      }
-      return config;
-    },
-  );
+  //     if (token && config.headers) {
+  //       config.headers['x-token'] = token;
+  //     }
+  //     return config;
+  //   },
+  // );
 
   api.interceptors.response.use(
     (response) => response,
