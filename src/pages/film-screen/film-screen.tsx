@@ -5,23 +5,26 @@ import FilmCards from '../../components/film-cards/film-cards';
 import { useAppSelector } from '../../hooks';
 import { filmSelector } from '../../store/selectors';
 import { Film } from '../../types/films';
+import { Link, useParams } from 'react-router-dom';
+import { AppRoute } from '../../const';
 
 
 function FilmOverviewScreen():JSX.Element {
+  const {id} = useParams();
   const films = useAppSelector(filmSelector);
 
-  if (films === undefined) {
-    return <div>Loading...</div>;
-  }
+  const film: Film | undefined = films.find((item) => item.id === Number(id));
 
-  const film: Film = films[0];
+  const backgroundColor = {
+    backgroundColor: film?.backgroundColor,
+  };
 
   return (
     <>
-      <section className="film-card film-card--full">
+      <section className="film-card film-card--full" style={backgroundColor}>
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+            <img src={film?.backgroundImage} alt={film?.backgroundImage} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -33,19 +36,21 @@ function FilmOverviewScreen():JSX.Element {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{film.name}</h2>
+              <h2 className="film-card__title">{film?.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{film.genre}</span>
-                <span className="film-card__year">{film.released}</span>
+                <span className="film-card__genre">{film?.genre}</span>
+                <span className="film-card__year">{film?.released}</span>
               </p>
 
               <div className="film-card__buttons">
-                <button className="btn btn--play film-card__button" type="button">
-                  <svg viewBox="0 0 19 19" width="19" height="19">
-                    <use xlinkHref="#play-s"></use>
-                  </svg>
-                  <span>Play</span>
-                </button>
+                <Link to={`${AppRoute.Player}/${film!.id}`}>
+                  <button className="btn btn--play film-card__button" type="button">
+                    <svg viewBox="0 0 19 19" width="19" height="19">
+                      <use xlinkHref="#play-s"></use>
+                    </svg>
+                    <span>Play</span>
+                  </button>
+                </Link>
                 <button className="btn btn--list film-card__button" type="button">
                   <svg viewBox="0 0 18 14" width="18" height="14">
                     <use xlinkHref="#in-list"></use>
@@ -62,7 +67,7 @@ function FilmOverviewScreen():JSX.Element {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={film.previewImage} alt={film.name} width="218" height="327" />
+              <img src={film?.posterImage} alt={film?.name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
@@ -81,19 +86,19 @@ function FilmOverviewScreen():JSX.Element {
               </nav>
 
               <div className="film-rating">
-                <div className="film-rating__score">{film.rating}</div>
+                <div className="film-rating__score">{film?.rating}</div>
                 <p className="film-rating__meta">
-                  <span className="film-rating__level">{film.scoresCount}</span>
-                  <span className="film-rating__count">{film.scoresCount} ratings</span>
+                  <span className="film-rating__level">{film?.scoresCount}</span>
+                  <span className="film-rating__count">{film?.scoresCount} ratings</span>
                 </p>
               </div>
 
               <div className="film-card__text">
-                <p>{film.description.info}</p>
+                <p>{film?.description.info}</p>
 
-                <p className="film-card__director"><strong>Director: {film.description.director}</strong></p>
+                <p className="film-card__director"><strong>Director: {film?.director}</strong></p>
 
-                <p className="film-card__starring"><strong>Starring: {(film.description.cast).join(', ')}</strong></p>
+                <p className="film-card__starring"><strong>Starring: {(film?.starring)?.join(', ')}</strong></p>
               </div>
             </div>
           </div>

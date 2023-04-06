@@ -1,18 +1,21 @@
+import { useParams } from 'react-router-dom';
 import { useAppSelector } from '../../hooks';
 import { filmSelector } from '../../store/selectors';
 import { Film } from '../../types/films';
 
 function PlayerScreen(): JSX.Element {
-  const film: Film = useAppSelector(filmSelector)[0];
+  const {id} = useParams();
+  const films = useAppSelector(filmSelector);
+  const film: Film | undefined = films.find((item) => item.id === Number(id));
 
-  if (film === undefined) {
-    return <div>Loading...</div>;
-  }
 
-  const {name, videoLink} = film;
+  // eslint-disable-next-line no-console
+  console.log(film?.name);
+
+
   return (
     <div className="player">
-      <video src={videoLink} className="player__video" poster="img/player-poster.jpg" autoPlay></video>
+      <video src={film?.videoLink} className="player__video" poster="img/player-poster.jpg" autoPlay></video>
 
       <button type="button" className="player__exit">Exit</button>
 
@@ -32,7 +35,7 @@ function PlayerScreen(): JSX.Element {
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">{name}</div>
+          <div className="player__name">{film?.name}</div>
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">
