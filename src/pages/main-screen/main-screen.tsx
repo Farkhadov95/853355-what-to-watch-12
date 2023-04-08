@@ -44,7 +44,7 @@ function MainScreen(): JSX.Element {
                   </button>
                 </Link>
 
-                <Link to='myList' title='myList' style={{textDecoration: 'none'}}>
+                <Link to={`${AppRoute.MyList}`} title='myList' style={{textDecoration: 'none'}}>
                   <button className="btn btn--list film-card__button" type="button">
                     <svg viewBox="0 0 19 20" width="19" height="20">
                       <use xlinkHref="#add"></use>

@@ -1,10 +1,13 @@
 import { useParams } from 'react-router-dom';
-import { useAppSelector } from '../../hooks';
+import { AppRoute } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { redirectToRoute } from '../../store/actions/action';
 import { filmSelector } from '../../store/selectors';
 import { Film } from '../../types/films';
 
 function PlayerScreen(): JSX.Element {
   const {id} = useParams();
+  const dispatch = useAppDispatch();
   const films = useAppSelector(filmSelector);
   const film: Film | undefined = films.find((item) => item.id === Number(id));
 
@@ -12,12 +15,16 @@ function PlayerScreen(): JSX.Element {
   // eslint-disable-next-line no-console
   console.log(film?.name);
 
+  const onExitButtonClick = () => {
+    dispatch(redirectToRoute(AppRoute.Root));
+  };
+
 
   return (
     <div className="player">
       <video src={film?.videoLink} className="player__video" poster="img/player-poster.jpg" autoPlay></video>
 
-      <button type="button" className="player__exit">Exit</button>
+      <button type="button" className="player__exit" onClick={onExitButtonClick}>Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">

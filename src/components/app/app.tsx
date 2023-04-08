@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
 import MainScreen from '../../pages/main-screen/main-screen';
@@ -11,6 +11,8 @@ import PrivateRoute from '../private-route/private-route';
 import { useAppSelector } from '../../hooks';
 import { authorizationStatusSelector, isFilmsLoadingSelector } from '../../store/selectors';
 import LoadingScreen from '../../pages/loading-screen/loading-screen';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(authorizationStatusSelector);
@@ -26,15 +28,13 @@ function App(): JSX.Element {
   // }
 
   if (isFilmsDataLoading) {
-    // eslint-disable-next-line no-console
-    console.log(`authorizationStatus ${authorizationStatus}, isFilmsDataLoading ${String(isFilmsDataLoading)}`);
     return (
       <LoadingScreen />
     );
   }
 
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Root}
@@ -83,7 +83,7 @@ function App(): JSX.Element {
           }
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

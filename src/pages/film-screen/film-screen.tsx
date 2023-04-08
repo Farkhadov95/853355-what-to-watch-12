@@ -14,6 +14,26 @@ function FilmOverviewScreen():JSX.Element {
   const films = useAppSelector(filmSelector);
 
   const film: Film | undefined = films.find((item) => item.id === Number(id));
+  let filmSatisfaction: string;
+
+  if (film && film.rating) {
+    if (film.rating <= 3.5) {
+      filmSatisfaction = 'Unwatchable';
+    } else if (film.rating <= 5) {
+      filmSatisfaction = 'Bad';
+    } else if (film.rating <= 6.5) {
+      filmSatisfaction = 'Normal';
+    } else if (film.rating <= 8) {
+      filmSatisfaction = 'Good';
+    } else if (film.rating <= 10) {
+      filmSatisfaction = 'Masterpiece';
+    } else {
+      filmSatisfaction = 'N/A';
+    }
+  } else {
+    filmSatisfaction = 'N/A';
+  }
+
 
   const backgroundColor = {
     backgroundColor: film?.backgroundColor,
@@ -88,7 +108,7 @@ function FilmOverviewScreen():JSX.Element {
               <div className="film-rating">
                 <div className="film-rating__score">{film?.rating}</div>
                 <p className="film-rating__meta">
-                  <span className="film-rating__level">{film?.scoresCount}</span>
+                  <span className="film-rating__level">{filmSatisfaction}</span>
                   <span className="film-rating__count">{film?.scoresCount} ratings</span>
                 </p>
               </div>
