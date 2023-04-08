@@ -11,10 +11,6 @@ function PlayerScreen(): JSX.Element {
   const films = useAppSelector(filmSelector);
   const film: Film | undefined = films.find((item) => item.id === Number(id));
 
-
-  // eslint-disable-next-line no-console
-  console.log(film?.name);
-
   const onExitButtonClick = () => {
     dispatch(redirectToRoute(AppRoute.Root));
   };
