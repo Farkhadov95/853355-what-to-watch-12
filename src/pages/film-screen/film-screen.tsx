@@ -3,48 +3,40 @@ import HeaderUserBlock from '../../components/header-user-block/header-user-bloc
 import Logo from '../../components/logo/logo';
 import FilmCards from '../../components/film-cards/film-cards';
 import { useAppSelector } from '../../hooks';
-import { filmSelector } from '../../store/selectors';
-import { Film } from '../../types/films';
+import { filmSelector, isFilmsLoadingSelector } from '../../store/selectors';
 import { Link, useParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { Film } from '../../types/films';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
+import { getFilmSatisfaction } from '../../utils/utils';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 
 function FilmOverviewScreen():JSX.Element {
   const {id} = useParams();
-  const films = useAppSelector(filmSelector);
+  const { filmsData } = useAppSelector(filmSelector);
+  const isFilmsDataLoading = useAppSelector(isFilmsLoadingSelector);
 
-  const film: Film | undefined = films.find((item) => item.id === Number(id));
-  let filmSatisfaction: string;
-
-  if (film && film.rating) {
-    if (film.rating <= 3.5) {
-      filmSatisfaction = 'Unwatchable';
-    } else if (film.rating <= 5) {
-      filmSatisfaction = 'Bad';
-    } else if (film.rating <= 6.5) {
-      filmSatisfaction = 'Normal';
-    } else if (film.rating <= 8) {
-      filmSatisfaction = 'Good';
-    } else if (film.rating <= 10) {
-      filmSatisfaction = 'Masterpiece';
-    } else {
-      filmSatisfaction = 'N/A';
-    }
-  } else {
-    filmSatisfaction = 'N/A';
+  if (isFilmsDataLoading) {
+    return (
+      <LoadingScreen />
+    );
   }
 
+  const film: Film | undefined = filmsData.find((item) => item.id === Number(id));
 
-  const backgroundColor = {
-    backgroundColor: film?.backgroundColor,
-  };
+  if (film === undefined) {
+    return <NotFoundScreen />;
+  }
+
+  const filmSatisfaction = getFilmSatisfaction(film.rating);
 
   return (
     <>
-      <section className="film-card film-card--full" style={backgroundColor}>
+      <section className="film-card film-card--full" style={{backgroundColor: film.backgroundColor || '#970a0a'}}>
         <div className="film-card__hero">
           <div className="film-card__bg">
-            <img src={film?.backgroundImage} alt={film?.backgroundImage} />
+            <img src={film.backgroundImage} alt={film.backgroundImage} />
           </div>
 
           <h1 className="visually-hidden">WTW</h1>
@@ -56,14 +48,14 @@ function FilmOverviewScreen():JSX.Element {
 
           <div className="film-card__wrap">
             <div className="film-card__desc">
-              <h2 className="film-card__title">{film?.name}</h2>
+              <h2 className="film-card__title">{film.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{film?.genre}</span>
-                <span className="film-card__year">{film?.released}</span>
+                <span className="film-card__genre">{film.genre}</span>
+                <span className="film-card__year">{film.released}</span>
               </p>
 
               <div className="film-card__buttons">
-                <Link to={`${AppRoute.Player}/${film!.id}`}>
+                <Link to={`${AppRoute.Player}/${film.id}`}>
                   <button className="btn btn--play film-card__button" type="button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
@@ -78,7 +70,7 @@ function FilmOverviewScreen():JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <a href="add-review.html" className="btn film-card__button">Add review</a>
+                <Link to={AppRoute.Review} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>
@@ -87,7 +79,7 @@ function FilmOverviewScreen():JSX.Element {
         <div className="film-card__wrap film-card__translate-top">
           <div className="film-card__info">
             <div className="film-card__poster film-card__poster--big">
-              <img src={film?.posterImage} alt={film?.name} width="218" height="327" />
+              <img src={film.posterImage} alt={film.name} width="218" height="327" />
             </div>
 
             <div className="film-card__desc">
@@ -106,19 +98,19 @@ function FilmOverviewScreen():JSX.Element {
               </nav>
 
               <div className="film-rating">
-                <div className="film-rating__score">{film?.rating}</div>
+                <div className="film-rating__score">{film.rating}</div>
                 <p className="film-rating__meta">
                   <span className="film-rating__level">{filmSatisfaction}</span>
-                  <span className="film-rating__count">{film?.scoresCount} ratings</span>
+                  <span className="film-rating__count">{film.scoresCount} ratings</span>
                 </p>
               </div>
 
               <div className="film-card__text">
-                <p>{film?.description.info}</p>
+                <p>{film.description.info}</p>
 
-                <p className="film-card__director"><strong>Director: {film?.director}</strong></p>
+                <p className="film-card__director"><strong>Director: {film.director}</strong></p>
 
-                <p className="film-card__starring"><strong>Starring: {(film?.starring)?.join(', ')}</strong></p>
+                <p className="film-card__starring"><strong>Starring: {(film.starring).join(', ')}</strong></p>
               </div>
             </div>
           </div>
@@ -128,7 +120,7 @@ function FilmOverviewScreen():JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
           <div className="catalog__films-list">
-            <FilmCards films={films.slice(0, 4)}/>
+            <FilmCards films={filmsData.slice(0, 4)}/>
           </div>
         </section>
         <Footer />

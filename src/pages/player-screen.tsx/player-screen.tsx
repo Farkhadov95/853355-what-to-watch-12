@@ -8,13 +8,12 @@ import { Film } from '../../types/films';
 function PlayerScreen(): JSX.Element {
   const {id} = useParams();
   const dispatch = useAppDispatch();
-  const films = useAppSelector(filmSelector);
-  const film: Film | undefined = films.find((item) => item.id === Number(id));
+  const { filmsData } = useAppSelector(filmSelector);
+  const film: Film | undefined = filmsData.find((item) => item.id === Number(id));
 
   const onExitButtonClick = () => {
     dispatch(redirectToRoute(AppRoute.Root));
   };
-
 
   return (
     <div className="player">

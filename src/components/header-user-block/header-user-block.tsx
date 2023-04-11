@@ -7,6 +7,9 @@ import { authorizationStatusSelector } from '../../store/selectors';
 function HeaderUserBlock(): JSX.Element {
   const authorizationStatus = useAppSelector(authorizationStatusSelector);
   const dispatch = useAppDispatch();
+
+  // eslint-disable-next-line no-console
+  console.log(authorizationStatus);
   return (
     <ul className="user-block">
       <li className="user-block__item">
@@ -16,7 +19,8 @@ function HeaderUserBlock(): JSX.Element {
       </li>
       <li className="user-block__item">
         {authorizationStatus === 'AUTH'
-          ? <Link className="user-block__link" onClick={(evt) => {evt.preventDefault(); dispatch(logoutAction());}} to='/'>Sign out</Link>
+        // eslint-disable-next-line no-console
+          ? <Link className="user-block__link" onClick={(evt) => {evt.preventDefault(); dispatch(logoutAction()); console.log('Click');}} to='/'>Sign out</Link>
           : <Link className="user-block__link" to={AppRoute.Login}>Sign in</Link>}
       </li>
     </ul>

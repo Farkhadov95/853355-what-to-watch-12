@@ -1,17 +1,12 @@
-import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
-import {StatusCodes} from 'http-status-codes';
+import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { StatusCodes } from '../const';
 import { processErrorHandle } from './process-error-handler';
+import { getToken } from './token';
 
 const BASE_URL = 'https://12.react.pages.academy/wtw';
 const REQUEST_TIMEOUT = 5000;
 
-const StatusCodeMapping: Record<number, boolean> = {
-  [StatusCodes.BAD_REQUEST]: true,
-  [StatusCodes.UNAUTHORIZED]: true,
-  [StatusCodes.NOT_FOUND]: true
-};
-
-const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];
+const shouldDisplayError = (response: AxiosResponse) => Object.values(StatusCodes).includes(response.status);
 
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({
@@ -19,16 +14,16 @@ export const createAPI = (): AxiosInstance => {
     timeout: REQUEST_TIMEOUT
   });
 
-  // api.interceptors.request.use(
-  //   (config: AxiosRequestConfig) => {
-  //     const token = getToken();
+  api.interceptors.request.use(
+    (config: AxiosRequestConfig) => {
+      const token = getToken();
 
-  //     if (token && config.headers) {
-  //       config.headers['x-token'] = token;
-  //     }
-  //     return config;
-  //   },
-  // );
+      if (token && config.headers) {
+        config.headers['x-token'] = token;
+      }
+      return config;
+    },
+  );
 
   api.interceptors.response.use(
     (response) => response,

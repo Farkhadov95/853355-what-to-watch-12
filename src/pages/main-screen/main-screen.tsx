@@ -5,12 +5,21 @@ import HeaderUserBlock from '../../components/header-user-block/header-user-bloc
 import Logo from '../../components/logo/logo';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { filmSelector } from '../../store/selectors';
+import { filmSelector, isFilmsLoadingSelector } from '../../store/selectors';
 import FilmsCatalogScreen from '../films-catalog-screen/films-catalog-screen';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 
 function MainScreen(): JSX.Element {
-  const film = useAppSelector(filmSelector)[1];
+  const {filmsData} = useAppSelector(filmSelector);
+  const isFilmsDataLoading = useAppSelector(isFilmsLoadingSelector);
+
+  if (isFilmsDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
+  const film = filmsData[0];
 
   return (
     <React.Fragment>
