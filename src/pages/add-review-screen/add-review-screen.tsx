@@ -1,12 +1,20 @@
+import { useParams } from 'react-router-dom';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import { useAppSelector } from '../../hooks';
 import { filmSelector} from '../../store/selectors';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 function AddReviewScreen(): JSX.Element {
+  const {id} = useParams();
   const {filmsData} = useAppSelector(filmSelector);
-  const film = filmsData[0];
+
+  const film = filmsData.find((item) => item.id === Number(id));
+
+  if (film === undefined) {
+    return <NotFoundScreen />;
+  }
 
   const {name, posterImage } = film;
 

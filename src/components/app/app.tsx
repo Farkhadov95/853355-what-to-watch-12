@@ -31,7 +31,7 @@ function App(): JSX.Element {
           }
         />
         <Route
-          path={AppRoute.Review}
+          path={`${AppRoute.Review}/:id`}
           element={
             <PrivateRoute>
               <AddReviewScreen/>

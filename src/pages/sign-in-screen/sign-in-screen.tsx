@@ -1,8 +1,11 @@
 import { useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ErrorMessage from '../../components/error-message/error-message';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
+import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks';
+import { processErrorHandle } from '../../services/process-error-handler';
 import { loginAction } from '../../store/actions/api-actions';
 import { AuthData } from '../../types/auth-data';
 
@@ -20,18 +23,20 @@ function SignInScreen(): JSX.Element {
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if (emailRef.current !== null && passwordRef.current !== null) {
+    if (emailRef.current?.value && passwordRef.current?.value) {
       onSubmit({
         login: emailRef.current.value,
         password: passwordRef.current.value,
       });
+      navigate(AppRoute.Root);
+    } else {
+      processErrorHandle('Please, enter your email and password');
     }
-
-    navigate('/');
   };
 
   return (
     <div className="user-page">
+      <ErrorMessage />
       <header className="page-header user-page__head">
         <Logo />
         <h1 className="page-title user-page__title">Sign in</h1>

@@ -6,7 +6,6 @@ import { useAppSelector } from '../../hooks';
 import { filmSelector, isFilmsLoadingSelector } from '../../store/selectors';
 import { Link, useParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
-import { Film } from '../../types/films';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { getFilmSatisfaction } from '../../utils/utils';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -23,7 +22,7 @@ function FilmOverviewScreen():JSX.Element {
     );
   }
 
-  const film: Film | undefined = filmsData.find((item) => item.id === Number(id));
+  const film = filmsData.find((item) => item.id === Number(id));
 
   if (film === undefined) {
     return <NotFoundScreen />;
@@ -70,7 +69,7 @@ function FilmOverviewScreen():JSX.Element {
                   <span>My list</span>
                   <span className="film-card__count">9</span>
                 </button>
-                <Link to={AppRoute.Review} className="btn film-card__button">Add review</Link>
+                <Link to={`${AppRoute.Review}/${film.id}`} className="btn film-card__button">Add review</Link>
               </div>
             </div>
           </div>

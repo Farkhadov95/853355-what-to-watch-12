@@ -3,13 +3,17 @@ import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { redirectToRoute } from '../../store/actions/action';
 import { filmSelector } from '../../store/selectors';
-import { Film } from '../../types/films';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 function PlayerScreen(): JSX.Element {
   const {id} = useParams();
   const dispatch = useAppDispatch();
   const { filmsData } = useAppSelector(filmSelector);
-  const film: Film | undefined = filmsData.find((item) => item.id === Number(id));
+  const film = filmsData.find((item) => item.id === Number(id));
+
+  if (film === undefined) {
+    return <NotFoundScreen />;
+  }
 
   const onExitButtonClick = () => {
     dispatch(redirectToRoute(AppRoute.Root));
