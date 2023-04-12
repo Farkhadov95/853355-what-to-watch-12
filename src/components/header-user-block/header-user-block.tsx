@@ -12,7 +12,9 @@ function HeaderUserBlock(): JSX.Element {
     <ul className="user-block">
       <li className="user-block__item">
         <div className="user-block__avatar">
-          <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+          {authorizationStatus === 'AUTH'
+            ? <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+            : <span></span>}
         </div>
       </li>
       <li className="user-block__item">
