@@ -37,8 +37,8 @@ function ReviewForm(): JSX.Element {
           id="review-text"
           placeholder="Review text"
           onChange={onChangeHandler}
+          defaultValue={reviewInfo['review-text']}
         >
-          {reviewInfo['review-text']}
         </textarea>
         <div className="add-review__submit">
           <button className="add-review__btn" type="submit">Post</button>

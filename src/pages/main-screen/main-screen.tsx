@@ -3,25 +3,29 @@ import { Link } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
+import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { filmSelector } from '../../store/selectors';
+import { filmSelector, isFilmsLoadingSelector } from '../../store/selectors';
 import FilmsCatalogScreen from '../films-catalog-screen/films-catalog-screen';
+import LoadingScreen from '../loading-screen/loading-screen';
 
 
 function MainScreen(): JSX.Element {
-  const film = useAppSelector(filmSelector)[1];
+  const {filmsData} = useAppSelector(filmSelector);
+  const isFilmsDataLoading = useAppSelector(isFilmsLoadingSelector);
 
-  if (film === undefined) {
-    return <div>Loading...</div>;
+  if (isFilmsDataLoading) {
+    return (
+      <LoadingScreen />
+    );
   }
-
-  const {name, genre, year} = film;
+  const film = filmsData[0];
 
   return (
     <React.Fragment>
       <section className="film-card">
         <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt="The Grand Budapest Hotel" />
+          <img src={film.backgroundImage} alt={film.backgroundImage} />
         </div>
         <h1 className="visually-hidden">WTW</h1>
         <header className="page-header film-card__head">
@@ -31,16 +35,16 @@ function MainScreen(): JSX.Element {
         <div className="film-card__wrap">
           <div className="film-card__info">
             <div className="film-card__poster">
-              <img src="img/the-grand-budapest-hotel-poster.jpg" alt="The Grand Budapest Hotel poster" width="218" height="327" />
+              <img src={film.posterImage} alt={film.posterImage} width="218" height="327" />
             </div>
             <div className="film-card__desc">
-              <h2 className="film-card__title">{name}</h2>
+              <h2 className="film-card__title">{film.name}</h2>
               <p className="film-card__meta">
-                <span className="film-card__genre">{genre}</span>
-                <span className="film-card__year">{year}</span>
+                <span className="film-card__genre">{film.genre}</span>
+                <span className="film-card__year">{film.released}</span>
               </p>
               <div className="film-card__buttons">
-                <Link to='player' title='player' style={{textDecoration: 'none'}}>
+                <Link to={`${AppRoute.Player}/${film.id}`} title='player' style={{textDecoration: 'none'}}>
                   <button className="btn btn--play film-card__button" type="button">
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
@@ -49,7 +53,7 @@ function MainScreen(): JSX.Element {
                   </button>
                 </Link>
 
-                <Link to='myList' title='myList' style={{textDecoration: 'none'}}>
+                <Link to={`${AppRoute.MyList}`} title='myList' style={{textDecoration: 'none'}}>
                   <button className="btn btn--list film-card__button" type="button">
                     <svg viewBox="0 0 19 20" width="19" height="20">
                       <use xlinkHref="#add"></use>

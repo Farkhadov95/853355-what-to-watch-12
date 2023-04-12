@@ -1,22 +1,44 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { films } from '../../mocks/films';
+import { AuthorizationStatus, DEFAULT_GENRE } from '../../const';
 import { Films } from '../../types/films';
-import { setGenre } from '../actions/action';
+import { loadFilms, requireAuthorization, setError, setFilmsDataLoadingStatus, setGenre } from '../actions/action';
 
-type State = {
+type InitialState = {
   genre: string;
-  films: Films;
+  films: {
+   filmsData: Films;
+   isFilmsDataLoading: boolean;
+  };
+  authorizationStatus: AuthorizationStatus;
+  error: string | null;
 }
 
-const initialState: State = {
-  genre: 'All genres',
-  films: films
+const initialState: InitialState = {
+  genre: DEFAULT_GENRE,
+  films: {
+    filmsData: [],
+    isFilmsDataLoading: false,
+  },
+  authorizationStatus: AuthorizationStatus.Unknown,
+  error: null
 };
 
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(setGenre, (state, action) => {
       state.genre = action.payload;
+    })
+    .addCase(loadFilms, (state, action) => {
+      state.films.filmsData = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setFilmsDataLoadingStatus, (state, action) => {
+      state.films.isFilmsDataLoading = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
     });
 });
 

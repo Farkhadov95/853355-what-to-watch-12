@@ -1,5 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { Routes, Route } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import AddReviewScreen from '../../pages/add-review-screen/add-review-screen';
 import MainScreen from '../../pages/main-screen/main-screen';
 import MyListScreen from '../../pages/my-list-screen/my-list-screen';
@@ -8,10 +8,13 @@ import PlayerScreen from '../../pages/player-screen.tsx/player-screen';
 import SignInScreen from '../../pages/sign-in-screen/sign-in-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
+import HistoryRouter from '../history-route/history-route';
+import browserHistory from '../../browser-history';
 
 function App(): JSX.Element {
+
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Root}
@@ -22,31 +25,27 @@ function App(): JSX.Element {
         <Route
           path={AppRoute.MyList}
           element={
-            <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
-            >
+            <PrivateRoute>
               <MyListScreen/>
             </PrivateRoute>
           }
         />
         <Route
-          path={AppRoute.Review}
+          path={`${AppRoute.Review}/:id`}
           element={
-            <PrivateRoute
-              authorizationStatus={AuthorizationStatus.Auth}
-            >
+            <PrivateRoute>
               <AddReviewScreen/>
             </PrivateRoute>
           }
         />
         <Route
-          path={AppRoute.Film}
+          path={`${AppRoute.Film}/:id`}
           element={
-            <FilmScreen/>
+            <FilmScreen />
           }
         />
         <Route
-          path={AppRoute.Player}
+          path={`${AppRoute.Player}/:id`}
           element={
             <PlayerScreen/>
           }
@@ -64,7 +63,7 @@ function App(): JSX.Element {
           }
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 }
 

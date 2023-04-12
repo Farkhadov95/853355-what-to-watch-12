@@ -1,19 +1,29 @@
-import { useAppSelector } from '../../hooks';
+import { useParams } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { redirectToRoute } from '../../store/actions/action';
 import { filmSelector } from '../../store/selectors';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 function PlayerScreen(): JSX.Element {
-  const film = useAppSelector(filmSelector)[0];
+  const {id} = useParams();
+  const dispatch = useAppDispatch();
+  const { filmsData } = useAppSelector(filmSelector);
+  const film = filmsData.find((item) => item.id === Number(id));
 
   if (film === undefined) {
-    return <div>Loading...</div>;
+    return <NotFoundScreen />;
   }
 
-  const {name, videoSrc} = film;
+  const onExitButtonClick = () => {
+    dispatch(redirectToRoute(AppRoute.Root));
+  };
+
   return (
     <div className="player">
-      <video src={videoSrc} className="player__video" poster="img/player-poster.jpg" autoPlay></video>
+      <video src={film?.videoLink} className="player__video" poster="img/player-poster.jpg" autoPlay></video>
 
-      <button type="button" className="player__exit">Exit</button>
+      <button type="button" className="player__exit" onClick={onExitButtonClick}>Exit</button>
 
       <div className="player__controls">
         <div className="player__controls-row">
@@ -31,7 +41,7 @@ function PlayerScreen(): JSX.Element {
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">{name}</div>
+          <div className="player__name">{film?.name}</div>
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">

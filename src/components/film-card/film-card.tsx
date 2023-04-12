@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import { Film } from '../../types/films';
 import MiniPlayer from '../mini-player/mini-player';
 
@@ -21,7 +22,7 @@ function FilmCard({film, isActive = false, mouseOverHandler, mouseOutHandler}: F
         <MiniPlayer film={film} isActive={isActive}/>
       </div>
       <h3 className="small-film-card__title">
-        <Link to='film' className="small-film-card__link">{film.name}</Link>
+        <Link to={`${AppRoute.Film}/${film.id}`} className="small-film-card__link">{film.name}</Link>
       </h3>
     </article>
   );

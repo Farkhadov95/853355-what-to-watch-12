@@ -1,18 +1,22 @@
+import { useParams } from 'react-router-dom';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import { useAppSelector } from '../../hooks';
-import { filmSelector } from '../../store/selectors';
-
+import { filmSelector} from '../../store/selectors';
+import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 function AddReviewScreen(): JSX.Element {
-  const film = useAppSelector(filmSelector)[0];
+  const {id} = useParams();
+  const {filmsData} = useAppSelector(filmSelector);
+
+  const film = filmsData.find((item) => item.id === Number(id));
 
   if (film === undefined) {
-    return <div>Loading...</div>;
+    return <NotFoundScreen />;
   }
 
-  const {name, imgSrc} = film;
+  const {name, posterImage } = film;
 
   return (
     <section className="film-card film-card--full">
@@ -41,7 +45,7 @@ function AddReviewScreen(): JSX.Element {
         </header>
 
         <div className="film-card__poster film-card__poster--small">
-          <img src={imgSrc} alt={name} width="218" height="327" />
+          <img src={posterImage} alt={name} width="218" height="327" />
         </div>
       </div>
 

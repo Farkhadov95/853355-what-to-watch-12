@@ -6,17 +6,17 @@ import { filmSelector, genreSelector } from '../../store/selectors';
 
 function FilmsCatalogScreen():JSX.Element {
 
-  const films = useAppSelector(filmSelector);
+  const {filmsData} = useAppSelector(filmSelector);
   const selectedGenre = useAppSelector(genreSelector);
 
   const filmsToDisplay = () => {
     if (selectedGenre === DEFAULT_GENRE) {
-      return films;
+      return filmsData;
     }
-    return films.filter((film) => film.genre === selectedGenre);
+    return filmsData.filter((film) => film.genre === selectedGenre);
   };
 
-  const availableGenres = [DEFAULT_GENRE, ...new Set(films.map((film) => film.genre))];
+  const availableGenres = [DEFAULT_GENRE, ...new Set(filmsData.map((film) => film.genre))];
 
   return(
     <section className="catalog">

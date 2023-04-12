@@ -3,11 +3,22 @@ import Footer from '../../components/footer/footer';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
 import { useAppSelector } from '../../hooks';
-import { filmSelector } from '../../store/selectors';
+import { filmSelector, isFilmsLoadingSelector } from '../../store/selectors';
+import LoadingScreen from '../loading-screen/loading-screen';
+import { checkAuthAction } from '../../store/actions/api-actions';
+import { store } from '../../store';
 
+store.dispatch(checkAuthAction());
 
 function MyListScreen(): JSX.Element {
-  const films = useAppSelector(filmSelector);
+  const { filmsData } = useAppSelector(filmSelector);
+  const isFilmsDataLoading = useAppSelector(isFilmsLoadingSelector);
+
+  if (isFilmsDataLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <div className="user-page">
@@ -21,7 +32,7 @@ function MyListScreen(): JSX.Element {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__films-list">
-          <FilmCards films={films}/>
+          <FilmCards films={filmsData}/>
         </div>
       </section>
 

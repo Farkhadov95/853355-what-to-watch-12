@@ -1,4 +1,13 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { logoutAction } from '../../store/actions/api-actions';
+import { authorizationStatusSelector } from '../../store/selectors';
+
 function HeaderUserBlock(): JSX.Element {
+  const authorizationStatus = useAppSelector(authorizationStatusSelector);
+  const dispatch = useAppDispatch();
+
   return (
     <ul className="user-block">
       <li className="user-block__item">
@@ -7,7 +16,9 @@ function HeaderUserBlock(): JSX.Element {
         </div>
       </li>
       <li className="user-block__item">
-        <a className="user-block__link">Sign out</a>
+        {authorizationStatus === 'AUTH'
+          ? <Link className="user-block__link" onClick={(evt) => {evt.preventDefault(); dispatch(logoutAction());}} to='/'>Sign out</Link>
+          : <Link className="user-block__link" to={AppRoute.Login}>Sign in</Link>}
       </li>
     </ul>
   );
