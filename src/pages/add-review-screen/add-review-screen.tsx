@@ -12,7 +12,7 @@ function AddReviewScreen(): JSX.Element {
 
   const film = filmsData.find((item) => item.id === Number(id));
 
-  if (film === undefined) {
+  if (!film) {
     return <NotFoundScreen />;
   }
 

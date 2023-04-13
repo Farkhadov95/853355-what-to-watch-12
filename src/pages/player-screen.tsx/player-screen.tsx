@@ -11,7 +11,7 @@ function PlayerScreen(): JSX.Element {
   const { filmsData } = useAppSelector(filmSelector);
   const film = filmsData.find((item) => item.id === Number(id));
 
-  if (film === undefined) {
+  if (!film) {
     return <NotFoundScreen />;
   }
 
@@ -21,7 +21,7 @@ function PlayerScreen(): JSX.Element {
 
   return (
     <div className="player">
-      <video src={film?.videoLink} className="player__video" poster="img/player-poster.jpg" autoPlay></video>
+      <video src={film.videoLink} className="player__video" poster="img/player-poster.jpg" autoPlay></video>
 
       <button type="button" className="player__exit" onClick={onExitButtonClick}>Exit</button>
 
@@ -41,7 +41,7 @@ function PlayerScreen(): JSX.Element {
             </svg>
             <span>Play</span>
           </button>
-          <div className="player__name">{film?.name}</div>
+          <div className="player__name">{film.name}</div>
 
           <button type="button" className="player__full-screen">
             <svg viewBox="0 0 27 27" width="27" height="27">
