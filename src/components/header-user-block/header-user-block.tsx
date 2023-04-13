@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/actions/api-actions';
 import { authorizationStatusSelector } from '../../store/selectors';
@@ -12,13 +12,13 @@ function HeaderUserBlock(): JSX.Element {
     <ul className="user-block">
       <li className="user-block__item">
         <div className="user-block__avatar">
-          {authorizationStatus === 'AUTH'
+          {authorizationStatus === AuthorizationStatus.Auth
             ? <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
             : <span></span>}
         </div>
       </li>
       <li className="user-block__item">
-        {authorizationStatus === 'AUTH'
+        {authorizationStatus === AuthorizationStatus.Auth
           ? <Link className="user-block__link" onClick={(evt) => {evt.preventDefault(); dispatch(logoutAction());}} to='/'>Sign out</Link>
           : <Link className="user-block__link" to={AppRoute.Login}>Sign in</Link>}
       </li>

@@ -11,7 +11,7 @@ function PlayerScreen(): JSX.Element {
   const { filmsData } = useAppSelector(filmSelector);
   const film = filmsData.find((item) => item.id === Number(id));
 
-  if (film === undefined) {
+  if (!film) {
     return <NotFoundScreen />;
   }
 
