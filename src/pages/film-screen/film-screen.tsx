@@ -7,14 +7,32 @@ import { filmSelector, isFilmsLoadingSelector } from '../../store/selectors';
 import { Link, useParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import { getFilmSatisfaction } from '../../utils/utils';
 import LoadingScreen from '../loading-screen/loading-screen';
+import FilmReviews from '../../components/film-info/film-reviews';
+import { useState } from 'react';
+import FilmOverview from '../../components/film-info/film-overview';
+import FilmDetails from '../../components/film-info/film-details';
+import classNames from 'classnames';
 
 
-function FilmOverviewScreen():JSX.Element {
+function FilmScreen():JSX.Element {
   const {id} = useParams();
   const { filmsData } = useAppSelector(filmSelector);
   const isFilmsDataLoading = useAppSelector(isFilmsLoadingSelector);
+
+  const [activeTab, setActiveTab] = useState('Overview');
+
+  const showOverview = () => {
+    setActiveTab('Overview');
+  };
+
+  const showDetails = () => {
+    setActiveTab('Details');
+  };
+
+  const showReviews = () => {
+    setActiveTab('Reviews');
+  };
 
   if (isFilmsDataLoading) {
     return (
@@ -28,7 +46,6 @@ function FilmOverviewScreen():JSX.Element {
     return <NotFoundScreen />;
   }
 
-  const filmSatisfaction = getFilmSatisfaction(film.rating);
 
   return (
     <>
@@ -54,20 +71,22 @@ function FilmOverviewScreen():JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <Link to={`${AppRoute.Player}/${film.id}`}>
-                  <button className="btn btn--play film-card__button" type="button">
+                <button className="btn btn--play film-card__button" type="button">
+                  <Link to={`${AppRoute.Player}/${film.id}`} style={{textDecoration: 'none', color: '#eee5b5'}}>
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
                     <span>Play</span>
-                  </button>
-                </Link>
+                  </Link>
+                </button>
                 <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 18 14" width="18" height="14">
-                    <use xlinkHref="#in-list"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
+                  <Link to={`${AppRoute.MyList}`} title='myList' style={{textDecoration: 'none', color: '#eee5b5'}}>
+                    <svg viewBox="0 0 18 14" width="18" height="14">
+                      <use xlinkHref="#in-list"></use>
+                    </svg>
+                    <span>My list</span>
+                    <span className="film-card__count">9</span>
+                  </Link>
                 </button>
                 <Link to={`${AppRoute.Review}/${film.id}`} className="btn film-card__button">Add review</Link>
               </div>
@@ -84,33 +103,21 @@ function FilmOverviewScreen():JSX.Element {
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="#" className="film-nav__link">Overview</a>
+                  <li className={classNames('film-nav__item', {'film-nav__item--active' : activeTab === 'Overview'})}>
+                    <Link to="#" className="film-nav__link" onClick={showOverview} >Overview</Link>
                   </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Details</a>
+                  <li className={classNames('film-nav__item', {'film-nav__item--active' : activeTab === 'Details'})}>
+                    <Link to="#" className="film-nav__link" onClick={showDetails}>Details</Link>
                   </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Reviews</a>
+                  <li className={classNames('film-nav__item', {'film-nav__item--active' : activeTab === 'Reviews'})}>
+                    <Link to="#" className="film-nav__link" onClick={showReviews}>Reviews</Link>
                   </li>
                 </ul>
               </nav>
+              {activeTab === 'Overview' && <FilmOverview film={film} />}
+              {activeTab === 'Details' && <FilmDetails film={film} />}
+              {activeTab === 'Reviews' && <FilmReviews film={film} />}
 
-              <div className="film-rating">
-                <div className="film-rating__score">{film.rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">{filmSatisfaction}</span>
-                  <span className="film-rating__count">{film.scoresCount} ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{film.description.info}</p>
-
-                <p className="film-card__director"><strong>Director: {film.director}</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: {(film.starring).join(', ')}</strong></p>
-              </div>
             </div>
           </div>
         </div>
@@ -128,4 +135,4 @@ function FilmOverviewScreen():JSX.Element {
   );
 }
 
-export default FilmOverviewScreen;
+export default FilmScreen;
