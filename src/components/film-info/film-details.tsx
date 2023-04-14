@@ -5,8 +5,6 @@ type FilmDetailsProps = {
 }
 
 function FilmDetails({film}: FilmDetailsProps): JSX.Element {
-  // eslint-disable-next-line no-console
-  console.log(film);
 
   return (
     <div className="film-card__text film-card__row">

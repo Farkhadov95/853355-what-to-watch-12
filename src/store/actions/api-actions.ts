@@ -4,10 +4,10 @@ import { store } from '..';
 import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../../const';
 import { deleteToken, setToken } from '../../services/token';
 import { AuthData } from '../../types/auth-data';
-import { Films } from '../../types/films';
+import { Films, Reviews } from '../../types/films';
 import { AppDispatch, State } from '../../types/state';
 import { UserData } from '../../types/user-data';
-import { loadFilms, redirectToRoute, requireAuthorization, setError, setFilmsDataLoadingStatus } from './action';
+import { loadFilms, loadReviews, redirectToRoute, requireAuthorization, setError, setFilmsDataLoadingStatus } from './action';
 
 export const clearErrorAction = createAsyncThunk(
   'clearError',
@@ -30,6 +30,20 @@ export const fetchFilmsDataAction = createAsyncThunk<void, undefined, {
     const {data} = await api.get<Films>('/films');
     dispatch(setFilmsDataLoadingStatus(false));
     dispatch(loadFilms(data));
+  },
+);
+
+export const fetchFilmReviewsAction = createAsyncThunk<void, number, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchFilmReviews',
+  async(id, {dispatch, extra: api}) => {
+    dispatch(setFilmsDataLoadingStatus(true));
+    const {data} = await api.get<Reviews>(`/comments/${id}`);
+    dispatch(setFilmsDataLoadingStatus(false));
+    dispatch(loadReviews(data));
   },
 );
 

@@ -1,16 +1,16 @@
 export const getFilmSatisfaction = (filmRating: number) => {
   let filmSatisfaction: string;
 
-  if (filmRating <= 3.5) {
-    filmSatisfaction = 'Unwatchable';
-  } else if (filmRating <= 5) {
+  if (filmRating < 3) {
     filmSatisfaction = 'Bad';
-  } else if (filmRating <= 6.5) {
+  } else if (filmRating < 5) {
     filmSatisfaction = 'Normal';
-  } else if (filmRating <= 8) {
+  } else if (filmRating < 8) {
     filmSatisfaction = 'Good';
-  } else if (filmRating <= 10) {
-    filmSatisfaction = 'Masterpiece';
+  } else if (filmRating < 10) {
+    filmSatisfaction = 'Very good';
+  } else if (filmRating === 10) {
+    filmSatisfaction = 'Awesome';
   } else {
     filmSatisfaction = 'N/A';
   }

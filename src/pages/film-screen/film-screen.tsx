@@ -3,22 +3,37 @@ import HeaderUserBlock from '../../components/header-user-block/header-user-bloc
 import Logo from '../../components/logo/logo';
 import FilmCards from '../../components/film-cards/film-cards';
 import { useAppSelector } from '../../hooks';
-import { filmSelector, isFilmsLoadingSelector } from '../../store/selectors';
+import { filmSelector, isFilmsLoadingSelector, reviewsSelector } from '../../store/selectors';
 import { Link, useParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 import FilmReviews from '../../components/film-info/film-reviews';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FilmOverview from '../../components/film-info/film-overview';
 import FilmDetails from '../../components/film-info/film-details';
 import classNames from 'classnames';
+import { fetchFilmReviewsAction } from '../../store/actions/api-actions';
+import { store } from '../../store';
 
 
 function FilmScreen():JSX.Element {
   const {id} = useParams();
+  const [isReviewsLoading, setIsReviewsLoading] = useState(true);
+  useEffect(() => {
+    async function fetchData() {
+      await store.dispatch(fetchFilmReviewsAction(Number(id)));
+      setIsReviewsLoading(false);
+    }
+    fetchData();
+  }, [id]);
+
   const { filmsData } = useAppSelector(filmSelector);
   const isFilmsDataLoading = useAppSelector(isFilmsLoadingSelector);
+  const reviews = useAppSelector(reviewsSelector);
+
+  // eslint-disable-next-line no-console
+  console.log(reviews);
 
   const [activeTab, setActiveTab] = useState('Overview');
 
@@ -34,7 +49,7 @@ function FilmScreen():JSX.Element {
     setActiveTab('Reviews');
   };
 
-  if (isFilmsDataLoading) {
+  if (isFilmsDataLoading || isReviewsLoading) {
     return (
       <LoadingScreen />
     );

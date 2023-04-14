@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, DEFAULT_GENRE } from '../../const';
-import { Films } from '../../types/films';
+import { Films, Reviews } from '../../types/films';
 import { loadFilms, requireAuthorization, setError, setFilmsDataLoadingStatus, setGenre } from '../actions/action';
 
 type InitialState = {
@@ -9,6 +9,7 @@ type InitialState = {
    filmsData: Films;
    isFilmsDataLoading: boolean;
   };
+  reviews: Reviews;
   authorizationStatus: AuthorizationStatus;
   error: string | null;
 }
@@ -19,6 +20,7 @@ const initialState: InitialState = {
     filmsData: [],
     isFilmsDataLoading: false,
   },
+  reviews: [],
   authorizationStatus: AuthorizationStatus.Unknown,
   error: null
 };

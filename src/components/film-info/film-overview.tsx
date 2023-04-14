@@ -7,9 +7,6 @@ type FilmOverviewProps = {
 
 function FilmOverview({film}: FilmOverviewProps): JSX.Element {
 
-  // eslint-disable-next-line no-console
-  console.log(film);
-
   const filmSatisfaction = getFilmSatisfaction(film.rating);
   return (
     <>

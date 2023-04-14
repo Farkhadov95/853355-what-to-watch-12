@@ -32,12 +32,15 @@ export type Rating = {
 }
 
 export type Review = {
-  movieName: string;
-  text: string;
+  comment: string;
+  date: Date;
+  id: number;
   rating: number;
-  ratingCategory: string;
-  reviewDate: string;
-  reviewer: string;
+  user: {
+    id: number;
+    name: string;
+  };
 }
 
 export type Films = Film[];
+export type Reviews = Review[];
