@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, DEFAULT_GENRE } from '../../const';
 import { Films, Reviews } from '../../types/films';
-import { loadFilms, requireAuthorization, setError, setFilmsDataLoadingStatus, setGenre } from '../actions/action';
+import { loadFilms, loadReviews, requireAuthorization, setError, setFilmsDataLoadingStatus, setGenre } from '../actions/action';
 
 type InitialState = {
   genre: string;
@@ -32,6 +32,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadFilms, (state, action) => {
       state.films.filmsData = action.payload;
+    })
+    .addCase(loadReviews, (state, action) => {
+      state.reviews = action.payload;
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;

@@ -61,7 +61,6 @@ function FilmScreen():JSX.Element {
     return <NotFoundScreen />;
   }
 
-
   return (
     <>
       <section className="film-card film-card--full" style={{backgroundColor: film.backgroundColor || '#970a0a'}}>
