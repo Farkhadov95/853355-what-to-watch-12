@@ -32,9 +32,6 @@ function FilmScreen():JSX.Element {
   const isFilmsDataLoading = useAppSelector(isFilmsLoadingSelector);
   const reviews = useAppSelector(reviewsSelector);
 
-  // eslint-disable-next-line no-console
-  console.log(reviews);
-
   const [activeTab, setActiveTab] = useState('Overview');
 
   const showOverview = () => {

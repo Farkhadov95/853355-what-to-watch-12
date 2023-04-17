@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import { store } from '../../store';
 import { postReviewAction } from '../../store/actions/api-actions';
 import { PostReview } from '../../types/films';
@@ -9,6 +11,7 @@ type ReviewFormProps = {
 }
 
 function ReviewForm({id}: ReviewFormProps): JSX.Element {
+  const navigate = useNavigate();
   const starsCount = Array.from({length: 10}, (_, i) => (10 - i));
   const [reviewInfo, setReviewInfo] = useState({
     comment: '',
@@ -19,8 +22,6 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
     evt.persist();
     const { name, value } = evt.target;
     setReviewInfo({...reviewInfo, [name]: value});
-    // eslint-disable-next-line no-console
-    console.log(name);
   };
 
   const review: PostReview = {
@@ -30,9 +31,8 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
 
   const onSubmitHandler = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    // eslint-disable-next-line no-console
-    console.log(review);
     store.dispatch(postReviewAction({id, review}));
+    navigate(`${AppRoute.Film}/${id}`);
   };
 
   return (
