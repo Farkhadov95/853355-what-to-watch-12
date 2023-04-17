@@ -1,7 +1,7 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, DEFAULT_GENRE } from '../../const';
 import { Films, Reviews } from '../../types/films';
-import { loadFilms, loadReviews, requireAuthorization, setError, setFilmsDataLoadingStatus, setGenre } from '../actions/action';
+import { loadFilm, loadFilms, loadReviews, requireAuthorization, setError, setFilmsDataLoadingStatus, setGenre } from '../actions/action';
 
 type InitialState = {
   genre: string;
@@ -25,6 +25,7 @@ const initialState: InitialState = {
   error: null
 };
 
+
 const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(setGenre, (state, action) => {
@@ -32,6 +33,13 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadFilms, (state, action) => {
       state.films.filmsData = action.payload;
+    })
+    .addCase(loadFilm, (state, action) => {
+      const {id, isFavorite} = action.payload;
+      const film = state.films.filmsData.find((filmItem) => filmItem.id === id);
+      if (film) {
+        film.isFavorite = isFavorite;
+      }
     })
     .addCase(loadReviews, (state, action) => {
       state.reviews = action.payload;

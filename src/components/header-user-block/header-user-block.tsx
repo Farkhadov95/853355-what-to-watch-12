@@ -13,7 +13,7 @@ function HeaderUserBlock(): JSX.Element {
       <li className="user-block__item">
         <div className="user-block__avatar">
           {authorizationStatus === AuthorizationStatus.Auth
-            ? <img src="img/avatar.jpg" alt="User avatar" width="63" height="63" />
+            ? <Link to={AppRoute.MyList}><img src="img/avatar.jpg" alt="User avatar" width="63" height="63" /></Link>
             : <span></span>}
         </div>
       </li>
