@@ -3,10 +3,9 @@ import { Link } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
+import MyListButton from '../../components/mylist-button/mylist-button';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { store } from '../../store';
-import { setFilmStatusAction } from '../../store/actions/api-actions';
 import { filmSelector, isFilmsLoadingSelector } from '../../store/selectors';
 import FilmsCatalogScreen from '../films-catalog-screen/films-catalog-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -22,14 +21,6 @@ function MainScreen(): JSX.Element {
     );
   }
   const film = filmsData[0];
-  const getFavoritesNumber = () => {
-    const favorites = filmsData.filter((item) => item.isFavorite);
-    return favorites.length;
-  };
-
-  const onStatusClick = () => {
-    store.dispatch(setFilmStatusAction({id: Number(film.id), status: film.isFavorite ? 0 : 1}));
-  };
 
   return (
     <React.Fragment>
@@ -63,19 +54,7 @@ function MainScreen(): JSX.Element {
                   </Link>
                 </button>
 
-                <button className="btn btn--list film-card__button" type="button" onClick={onStatusClick}>
-                  {
-                    film.isFavorite ?
-                      <svg width="18" height="14" viewBox="0 0 18 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path fillRule="evenodd" clipRule="evenodd" d="M2.40513 5.35353L6.1818 8.90902L15.5807 0L18 2.80485L6.18935 14L0 8.17346L2.40513 5.35353Z" fill="#EEE5B5"/>
-                      </svg> :
-                      <svg viewBox="0 0 19 20" width="19" height="20">
-                        <use xlinkHref="#add"></use>
-                      </svg>
-                  }
-                  <span>My list</span>
-                  <span className="film-card__count">{getFavoritesNumber()}</span>
-                </button>
+                <MyListButton id={film.id}/>
 
               </div>
             </div>
