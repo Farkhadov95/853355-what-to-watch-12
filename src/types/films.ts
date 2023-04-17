@@ -31,12 +31,17 @@ export type Rating = {
   reviews: Review[];
 }
 
-export type Review = {
+export type PostReview = {
   comment: string;
-  date: Date;
-  id: number;
   rating: number;
-  user: {
+}
+
+export type Review = {
+  comment : string;
+  rating : number;
+  date : string;
+  id : number;
+  user : {
     id: number;
     name: string;
   };

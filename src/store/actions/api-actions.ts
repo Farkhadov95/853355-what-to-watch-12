@@ -4,7 +4,7 @@ import { store } from '..';
 import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../../const';
 import { deleteToken, setToken } from '../../services/token';
 import { AuthData } from '../../types/auth-data';
-import { Films, Reviews } from '../../types/films';
+import { Films, PostReview, Review, Reviews } from '../../types/films';
 import { AppDispatch, State } from '../../types/state';
 import { UserData } from '../../types/user-data';
 import { loadFilms, loadReviews, redirectToRoute, requireAuthorization, setError, setFilmsDataLoadingStatus } from './action';
@@ -44,6 +44,18 @@ export const fetchFilmReviewsAction = createAsyncThunk<void, number, {
     const {data} = await api.get<Reviews>(`/comments/${id}`);
     dispatch(setFilmsDataLoadingStatus(false));
     dispatch(loadReviews(data));
+  },
+);
+
+export const postReviewAction = createAsyncThunk<Review, {id: number; review: PostReview}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/postReview',
+  async({id, review}, {dispatch, extra: api}) => {
+    const {data} = await api.post<Review>(`/comments/${id}`, review);
+    return data;
   },
 );
 

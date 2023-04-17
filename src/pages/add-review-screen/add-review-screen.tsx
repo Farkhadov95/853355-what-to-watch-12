@@ -50,7 +50,7 @@ function AddReviewScreen(): JSX.Element {
       </div>
 
       <div className="add-review">
-        <ReviewForm />
+        <ReviewForm id={Number(id)}/>
       </div>
 
     </section>

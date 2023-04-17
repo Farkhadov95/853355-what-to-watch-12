@@ -130,7 +130,7 @@ function FilmScreen():JSX.Element {
               </nav>
               {activeTab === 'Overview' && <FilmOverview film={film} />}
               {activeTab === 'Details' && <FilmDetails film={film} />}
-              {activeTab === 'Reviews' && <FilmReviews film={film} />}
+              {activeTab === 'Reviews' && <FilmReviews reviews={reviews} />}
 
             </div>
           </div>
