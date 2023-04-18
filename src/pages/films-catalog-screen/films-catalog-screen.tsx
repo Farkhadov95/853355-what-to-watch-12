@@ -1,6 +1,7 @@
+import { useState } from 'react';
 import FilmCards from '../../components/film-cards/film-cards';
 import GenreItem from '../../components/genre-item/genre-item';
-import { DEFAULT_GENRE } from '../../const';
+import { DEFAULT_GENRE, DEFAULT_FILMS_COUNT, STEP_SHOW_MORE } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { filmSelector, genreSelector } from '../../store/selectors';
 
@@ -8,6 +9,7 @@ function FilmsCatalogScreen():JSX.Element {
 
   const {filmsData} = useAppSelector(filmSelector);
   const selectedGenre = useAppSelector(genreSelector);
+  const [filmsCount, setFilmsCount] = useState(DEFAULT_FILMS_COUNT);
 
   const filmsToDisplay = () => {
     if (selectedGenre === DEFAULT_GENRE) {
@@ -16,6 +18,10 @@ function FilmsCatalogScreen():JSX.Element {
     return filmsData.filter((film) => film.genre === selectedGenre);
   };
 
+  const incrementFilmsCount = () => {
+    setFilmsCount(filmsCount + STEP_SHOW_MORE);
+  };
+  //TODO: Limit genres list to 10
   const availableGenres = [DEFAULT_GENRE, ...new Set(filmsData.map((film) => film.genre))];
 
   return(
@@ -29,12 +35,15 @@ function FilmsCatalogScreen():JSX.Element {
       </ul>
 
       <div className="catalog__films-list">
-        <FilmCards films={filmsToDisplay()}/>
+        <FilmCards films={filmsToDisplay()} currentFilmsCount={filmsCount}/>
       </div>
 
-      <div className="catalog__more">
-        <button className="catalog__button" type="button">Show more</button>
-      </div>
+      {
+        filmsCount < filmsToDisplay().length ?
+          <div className="catalog__more">
+            <button className="catalog__button" type="button" onClick={incrementFilmsCount}>Show more</button>
+          </div> : ''
+      }
     </section>
   );
 }

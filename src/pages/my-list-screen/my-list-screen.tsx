@@ -7,6 +7,7 @@ import { filmSelector, isFilmsLoadingSelector } from '../../store/selectors';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { checkAuthAction } from '../../store/actions/api-actions';
 import { store } from '../../store';
+import { MAX_FILMS_COUNT } from '../../const';
 
 store.dispatch(checkAuthAction());
 
@@ -32,7 +33,7 @@ function MyListScreen(): JSX.Element {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__films-list">
-          <FilmCards films={filmsData}/>
+          <FilmCards films={filmsData} currentFilmsCount={MAX_FILMS_COUNT}/>
         </div>
       </section>
 

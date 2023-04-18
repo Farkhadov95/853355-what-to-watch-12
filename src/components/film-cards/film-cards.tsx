@@ -1,13 +1,14 @@
-import React from 'react';
+import { useState } from 'react';
 import { Films } from '../../types/films';
 import FilmCard from '../film-card/film-card';
 
 type FilmCardsProps = {
   films: Films;
+  currentFilmsCount: number;
 }
 
-function FilmCards({films}: FilmCardsProps): JSX.Element {
-  const [activeFilmId, setActiveFilmId] = React.useState<number | null>(null);
+function FilmCards({films, currentFilmsCount}: FilmCardsProps): JSX.Element {
+  const [activeFilmId, setActiveFilmId] = useState<number | null>(null);
 
   const handleMouseOver = (id: number) => {
     setActiveFilmId(id);
@@ -17,9 +18,12 @@ function FilmCards({films}: FilmCardsProps): JSX.Element {
     setActiveFilmId(null);
   };
 
+  // eslint-disable-next-line no-console
+  console.log(currentFilmsCount);
+
   return (
     <>
-      {films.map((filmItem) => (
+      {films.slice(0, currentFilmsCount).map((filmItem) => (
         <FilmCard
           key={filmItem.id}
           film={filmItem}

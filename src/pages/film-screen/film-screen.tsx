@@ -5,7 +5,7 @@ import FilmCards from '../../components/film-cards/film-cards';
 import { useAppSelector } from '../../hooks';
 import { filmSelector, isFilmsLoadingSelector, reviewsSelector } from '../../store/selectors';
 import { Link, useParams } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, MORE_LIKE_COUNT } from '../../const';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 import FilmReviews from '../../components/film-info/film-reviews';
@@ -129,7 +129,7 @@ function FilmScreen():JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
           <div className="catalog__films-list">
-            <FilmCards films={filmsData.slice(0, 4)}/>
+            <FilmCards films={filmsData} currentFilmsCount={MORE_LIKE_COUNT}/>
           </div>
         </section>
         <Footer />
