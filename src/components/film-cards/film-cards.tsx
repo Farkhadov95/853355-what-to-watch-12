@@ -18,8 +18,7 @@ function FilmCards({films, currentFilmsCount}: FilmCardsProps): JSX.Element {
     setActiveFilmId(null);
   };
 
-  // eslint-disable-next-line no-console
-  console.log(currentFilmsCount);
+  //TODO: Stop rerender all cards on mouse over
 
   return (
     <>

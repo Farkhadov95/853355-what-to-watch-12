@@ -3,7 +3,7 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { processErrorHandle } from '../../services/process-error-handler';
 import { store } from '../../store';
-import { setFilmStatusAction } from '../../store/actions/api-actions';
+import { setFavoriteStatusAction } from '../../store/actions/api-actions';
 import { authorizationStatusSelector, filmSelector } from '../../store/selectors';
 
 type MyListButtonProps = {
@@ -24,7 +24,7 @@ function MyListButton({id}: MyListButtonProps): JSX.Element {
 
   const onStatusClick = () => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
-      store.dispatch(setFilmStatusAction({id: Number(id), status: film?.isFavorite ? 0 : 1}));
+      store.dispatch(setFavoriteStatusAction({id: Number(id), status: film?.isFavorite ? 0 : 1}));
     } else {
       navigate(AppRoute.Login);
       processErrorHandle('Please, log in to add this film to your list');

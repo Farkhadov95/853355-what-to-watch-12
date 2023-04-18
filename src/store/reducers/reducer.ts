@@ -1,12 +1,13 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { AuthorizationStatus, DEFAULT_GENRE } from '../../const';
 import { Films, Reviews } from '../../types/films';
-import { loadFilm, loadFilms, loadReviews, requireAuthorization, setError, setFilmsDataLoadingStatus, setGenre } from '../actions/action';
+import { loadFilm, loadFilms, loadReviews, loadSimilar, requireAuthorization, setError, setFilmsDataLoadingStatus, setGenre } from '../actions/action';
 
 type InitialState = {
   genre: string;
   films: {
    filmsData: Films;
+   similarFilms: Films;
    isFilmsDataLoading: boolean;
   };
   reviews: Reviews;
@@ -18,6 +19,7 @@ const initialState: InitialState = {
   genre: DEFAULT_GENRE,
   films: {
     filmsData: [],
+    similarFilms: [],
     isFilmsDataLoading: false,
   },
   reviews: [],
@@ -40,6 +42,9 @@ const reducer = createReducer(initialState, (builder) => {
       if (film) {
         film.isFavorite = isFavorite;
       }
+    })
+    .addCase(loadSimilar, (state, action) => {
+      state.films.similarFilms = action.payload;
     })
     .addCase(loadReviews, (state, action) => {
       state.reviews = action.payload;

@@ -7,7 +7,7 @@ import { AuthData } from '../../types/auth-data';
 import { Film, Films, PostReview, Review, Reviews } from '../../types/films';
 import { AppDispatch, State } from '../../types/state';
 import { UserData } from '../../types/user-data';
-import { loadFilm, loadFilms, loadReviews, redirectToRoute, requireAuthorization, setError, setFilmsDataLoadingStatus } from './action';
+import { loadFilm, loadFilms, loadReviews, loadSimilar, redirectToRoute, requireAuthorization, setError, setFilmsDataLoadingStatus } from './action';
 
 export const clearErrorAction = createAsyncThunk(
   'clearError',
@@ -33,7 +33,7 @@ export const fetchFilmsDataAction = createAsyncThunk<void, undefined, {
   },
 );
 
-export const setFilmStatusAction = createAsyncThunk<void, {id:number; status: number}, {
+export const setFavoriteStatusAction = createAsyncThunk<void, {id:number; status: number}, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -42,6 +42,20 @@ export const setFilmStatusAction = createAsyncThunk<void, {id:number; status: nu
   async({id, status}, {dispatch, extra: api}) => {
     const {data} = await api.post<Film>(`/favorite/${id}/${status}`);
     dispatch(loadFilm(data));
+  },
+);
+
+export const fetchSimilarFilmsAction = createAsyncThunk<void, {id:number}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchSimilarFilms',
+  async({id}, {dispatch, extra: api}) => {
+    dispatch(setFilmsDataLoadingStatus(true));
+    const {data} = await api.get<Films>(`/films/${id}/similar`);
+    dispatch(setFilmsDataLoadingStatus(false));
+    dispatch(loadSimilar(data));
   },
 );
 
@@ -65,7 +79,7 @@ export const postReviewAction = createAsyncThunk<Review, {id: number; review: Po
   extra: AxiosInstance;
 }>(
   'data/postReview',
-  async({id, review}, {dispatch, extra: api}) => {
+  async({id, review}, {extra: api}) => {
     const {data} = await api.post<Review>(`/comments/${id}`, review);
     return data;
   },
