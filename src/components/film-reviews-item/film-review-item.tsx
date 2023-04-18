@@ -1,10 +1,14 @@
 import { Review } from '../../types/films';
+import moment from 'moment';
 
 type FilmReviewProps = {
   review: Review;
 }
 
 function FilmReview({review}: FilmReviewProps): JSX.Element {
+  // eslint-disable-next-line no-console
+  console.log(review.date);
+  const date = moment(review.date).format('LL');
 
   return (
     <div className="review">
@@ -13,7 +17,7 @@ function FilmReview({review}: FilmReviewProps): JSX.Element {
 
         <footer className="review__details">
           <cite className="review__author">{review.user.name}</cite>
-          <time className="review__date" dateTime="2016-12-24">{review.date}</time>
+          <time className="review__date" dateTime={date}>{date}</time>
         </footer>
       </blockquote>
 
