@@ -24,13 +24,6 @@ export type FilmDescription = {
   cast: string[];
 }
 
-export type Rating = {
-  ratingTotal: number;
-  ratingCategory: string;
-  ratingVotes: number;
-  reviews: Review[];
-}
-
 export type PostReview = {
   comment: string;
   rating: number;

@@ -3,9 +3,9 @@ import HeaderUserBlock from '../../components/header-user-block/header-user-bloc
 import Logo from '../../components/logo/logo';
 import FilmCards from '../../components/film-cards/film-cards';
 import { useAppSelector } from '../../hooks';
-import { isFilmsLoadingSelector, reviewsSelector, similarFilmsSelector } from '../../store/selectors';
+import { authorizationStatusSelector, isFilmsLoadingSelector, reviewsSelector, similarFilmsSelector } from '../../store/selectors';
 import { Link, useParams } from 'react-router-dom';
-import { AppRoute, MORE_LIKE_COUNT } from '../../const';
+import { AppRoute, AuthorizationStatus, MORE_LIKE_COUNT } from '../../const';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 import FilmReviews from '../../components/film-info/film-reviews';
@@ -20,6 +20,7 @@ import MyListButton from '../../components/mylist-button/mylist-button';
 
 function FilmScreen():JSX.Element {
   const {id} = useParams();
+  const authorizationStatus = useAppSelector(authorizationStatusSelector);
   const similarFilms = useAppSelector(similarFilmsSelector);
   const isFilmsDataLoading = useAppSelector(isFilmsLoadingSelector);
   const reviews = useAppSelector(reviewsSelector);
@@ -92,7 +93,11 @@ function FilmScreen():JSX.Element {
                   <span>Play</span>
                 </button>
                 <MyListButton id={film.id}/>
-                <Link to={`${AppRoute.Review}/${film.id}`} className="btn film-card__button">Add review</Link>
+                {
+                  authorizationStatus === AuthorizationStatus.Auth
+                    ? <Link to={`${AppRoute.Review}/${film.id}`} className="btn film-card__button">Add review</Link>
+                    : ''
+                }
               </div>
             </div>
           </div>

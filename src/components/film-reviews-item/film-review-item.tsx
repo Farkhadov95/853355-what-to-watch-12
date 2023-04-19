@@ -6,8 +6,6 @@ type FilmReviewProps = {
 }
 
 function FilmReview({review}: FilmReviewProps): JSX.Element {
-  // eslint-disable-next-line no-console
-  console.log(review.date);
   const date = moment(review.date).format('LL');
 
   return (

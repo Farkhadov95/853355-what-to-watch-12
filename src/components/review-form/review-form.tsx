@@ -10,6 +10,8 @@ type ReviewFormProps = {
   id: number;
 }
 
+
+//TODO: Add validation
 function ReviewForm({id}: ReviewFormProps): JSX.Element {
   const navigate = useNavigate();
   const starsCount = Array.from({length: 10}, (_, i) => (10 - i));
