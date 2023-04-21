@@ -10,8 +10,16 @@ import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
+import { useSelector } from 'react-redux';
+import LoadingScreen from '../../pages/loading-screen/loading-screen';
 
 function App(): JSX.Element {
+  const isFilmsLoading = useSelector(getFilmsLoadingStatus);
+  if (isFilmsLoading) {
+    return (
+      <LoadingScreen />
+    );
+  }
 
   return (
     <HistoryRouter history={browserHistory}>
@@ -68,3 +76,7 @@ function App(): JSX.Element {
 }
 
 export default App;
+function getFilmsLoadingStatus(state: unknown): unknown {
+  throw new Error('Function not implemented.');
+}
+

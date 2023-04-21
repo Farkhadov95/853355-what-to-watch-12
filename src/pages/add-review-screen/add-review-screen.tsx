@@ -3,12 +3,12 @@ import HeaderUserBlock from '../../components/header-user-block/header-user-bloc
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import { useAppSelector } from '../../hooks';
-import { filmSelector} from '../../store/selectors';
+import { getFilms } from '../../store/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 function AddReviewScreen(): JSX.Element {
   const {id} = useParams();
-  const {filmsData} = useAppSelector(filmSelector);
+  const filmsData = useAppSelector(getFilms);
 
   const film = filmsData.find((item) => item.id === Number(id));
 

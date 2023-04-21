@@ -1,13 +1,14 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AxiosInstance } from 'axios';
 import { store } from '..';
-import { APIRoute, AppRoute, AuthorizationStatus, TIMEOUT_SHOW_ERROR } from '../../const';
+import { APIRoute, AppRoute, TIMEOUT_SHOW_ERROR } from '../../const';
 import { deleteToken, setToken } from '../../services/token';
 import { AuthData } from '../../types/auth-data';
 import { Film, Films, PostReview, Review, Reviews } from '../../types/films';
 import { AppDispatch, State } from '../../types/state';
 import { UserData } from '../../types/user-data';
-import { loadFilm, loadFilms, loadReviews, loadSimilar, redirectToRoute, requireAuthorization, setError, setFilmsDataLoadingStatus } from './action';
+import { setError } from '../films-data/films-data';
+import { redirectToRoute } from './action';
 
 export const clearErrorAction = createAsyncThunk(
   'clearError',
@@ -19,17 +20,15 @@ export const clearErrorAction = createAsyncThunk(
   },
 );
 
-export const fetchFilmsDataAction = createAsyncThunk<void, undefined, {
+export const fetchFilmsDataAction = createAsyncThunk<Films, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchFilms',
-  async(_arg, {dispatch, extra: api}) => {
-    dispatch(setFilmsDataLoadingStatus(true));
-    const {data} = await api.get<Films>('/films');
-    dispatch(setFilmsDataLoadingStatus(false));
-    dispatch(loadFilms(data));
+  async(_arg, {extra: api}) => {
+    const {data} = await api.get<Films>(APIRoute.Films);
+    return data;
   },
 );
 
@@ -39,37 +38,32 @@ export const setFavoriteStatusAction = createAsyncThunk<void, {id:number; status
   extra: AxiosInstance;
 }>(
   'data/setFilmStatus',
-  async({id, status}, {dispatch, extra: api}) => {
-    const {data} = await api.post<Film>(`/favorite/${id}/${status}`);
-    dispatch(loadFilm(data));
+  async({id, status}, {extra: api}) => {
+    await api.post<Film>(`/favorite/${id}/${status}`);
   },
 );
 
-export const fetchSimilarFilmsAction = createAsyncThunk<void, {id:number}, {
+export const fetchSimilarFilmsAction = createAsyncThunk<Films, {id:number}, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchSimilarFilms',
-  async({id}, {dispatch, extra: api}) => {
-    dispatch(setFilmsDataLoadingStatus(true));
+  async({id}, {extra: api}) => {
     const {data} = await api.get<Films>(`/films/${id}/similar`);
-    dispatch(setFilmsDataLoadingStatus(false));
-    dispatch(loadSimilar(data));
+    return data;
   },
 );
 
-export const fetchFilmReviewsAction = createAsyncThunk<void, number, {
+export const fetchReviewsAction = createAsyncThunk<Reviews, number, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchFilmReviews',
-  async(id, {dispatch, extra: api}) => {
-    dispatch(setFilmsDataLoadingStatus(true));
+  async(id, {extra: api}) => {
     const {data} = await api.get<Reviews>(`/comments/${id}`);
-    dispatch(setFilmsDataLoadingStatus(false));
-    dispatch(loadReviews(data));
+    return data;
   },
 );
 
@@ -91,13 +85,8 @@ export const checkAuthAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance;
 }>(
   'user/checkAuth',
-  async (_arg, {dispatch, extra: api}) => {
-    try {
-      await api.get(APIRoute.Login);
-      dispatch(requireAuthorization(AuthorizationStatus.Auth));
-    } catch {
-      dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-    }
+  async (_arg, {extra: api}) => {
+    await api.get(APIRoute.Login);
   },
 );
 
@@ -110,7 +99,6 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   async({login: email, password}, {dispatch, extra: api}) => {
     const {data: {token}} = await api.post<UserData>(APIRoute.Login, {email, password});
     setToken(token);
-    dispatch(requireAuthorization(AuthorizationStatus.Auth));
     dispatch(redirectToRoute(AppRoute.Root));
   }
 );
@@ -121,10 +109,8 @@ export const logoutAction = createAsyncThunk<void, undefined, {
   extra: AxiosInstance;
 }>(
   'user/logout',
-  async (_arg, {dispatch, extra: api}) => {
+  async (_arg, {extra: api}) => {
     await api.delete(APIRoute.Logout);
     deleteToken();
-    dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
-    dispatch(redirectToRoute(AppRoute.Root));
   },
 );

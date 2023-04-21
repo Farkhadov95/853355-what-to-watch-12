@@ -6,14 +6,14 @@ import Logo from '../../components/logo/logo';
 import MyListButton from '../../components/mylist-button/mylist-button';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { filmSelector, isFilmsLoadingSelector } from '../../store/selectors';
+import { getFilms, getIsFilmsLoading } from '../../store/selectors';
 import FilmsCatalogScreen from '../films-catalog-screen/films-catalog-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 
 function MainScreen(): JSX.Element {
-  const {filmsData} = useAppSelector(filmSelector);
-  const isFilmsDataLoading = useAppSelector(isFilmsLoadingSelector);
+  const filmsData = useAppSelector(getFilms);
+  const isFilmsDataLoading = useAppSelector(getIsFilmsLoading);
 
   if (isFilmsDataLoading) {
     return (

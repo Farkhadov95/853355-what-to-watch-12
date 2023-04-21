@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { authorizationStatusSelector } from '../../store/selectors';
+import { getAuthorizationStatus } from '../../store/selectors';
 
 type PrivateRouteProps = {
   children: JSX.Element;
@@ -9,7 +9,7 @@ type PrivateRouteProps = {
 
 function PrivateRoute({children}: PrivateRouteProps): JSX.Element {
 
-  const authorizationStatus = useAppSelector(authorizationStatusSelector);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   return (
     authorizationStatus === AuthorizationStatus.Auth
       ? children

@@ -27,6 +27,11 @@ export enum StatusCodes {
   NOT_FOUND = 404,
 }
 
+export enum NameSpace {
+  Data = 'DATA',
+  User = 'USER',
+}
+
 export const DEFAULT_GENRE = 'All genres';
 export const DEFAULT_FILMS_COUNT = 8;
 export const STEP_SHOW_MORE = 8;

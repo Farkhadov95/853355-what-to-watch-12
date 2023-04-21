@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { redirectToRoute } from '../../store/actions/action';
-import { filmSelector } from '../../store/selectors';
+import { getFilms } from '../../store/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 //TODO: Fix page refresh problem
@@ -11,7 +11,7 @@ import NotFoundScreen from '../not-found-screen/not-found-screen';
 function PlayerScreen(): JSX.Element {
   const {id} = useParams();
   const dispatch = useAppDispatch();
-  const { filmsData } = useAppSelector(filmSelector);
+  const filmsData = useAppSelector(getFilms);
   const videoRef = useRef<HTMLVideoElement>(null);
 
   const [isPlaying, setIsPlaying] = useState(true);

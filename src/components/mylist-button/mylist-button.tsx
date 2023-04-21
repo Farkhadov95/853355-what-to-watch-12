@@ -4,7 +4,7 @@ import { useAppSelector } from '../../hooks';
 import { processErrorHandle } from '../../services/process-error-handler';
 import { store } from '../../store';
 import { setFavoriteStatusAction } from '../../store/actions/api-actions';
-import { authorizationStatusSelector, filmSelector } from '../../store/selectors';
+import { getAuthorizationStatus, getFilms } from '../../store/selectors';
 
 type MyListButtonProps = {
     id: number;
@@ -12,8 +12,8 @@ type MyListButtonProps = {
 
 
 function MyListButton({id}: MyListButtonProps): JSX.Element {
-  const authorizationStatus = useAppSelector(authorizationStatusSelector);
-  const { filmsData } = useAppSelector(filmSelector);
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const filmsData = useAppSelector(getFilms);
   const navigate = useNavigate();
 
   const film = filmsData.find((item) => item.id === Number(id));

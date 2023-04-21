@@ -3,7 +3,7 @@ import Footer from '../../components/footer/footer';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
 import { useAppSelector } from '../../hooks';
-import { filmSelector, isFilmsLoadingSelector } from '../../store/selectors';
+import { getFilms, getIsFilmsLoading } from '../../store/selectors';
 import LoadingScreen from '../loading-screen/loading-screen';
 import { checkAuthAction } from '../../store/actions/api-actions';
 import { store } from '../../store';
@@ -12,8 +12,8 @@ import { MAX_FILMS_COUNT } from '../../const';
 store.dispatch(checkAuthAction());
 
 function MyListScreen(): JSX.Element {
-  const { filmsData } = useAppSelector(filmSelector);
-  const isFilmsDataLoading = useAppSelector(isFilmsLoadingSelector);
+  const filmsData = useAppSelector(getFilms);
+  const isFilmsDataLoading = useAppSelector(getIsFilmsLoading);
 
   if (isFilmsDataLoading) {
     return (
