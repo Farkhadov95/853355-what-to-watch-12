@@ -1,9 +1,9 @@
-import { AuthorizationStatus } from '../const';
 import {store} from '../store';
+import { AuthorizationStatus } from '../const';
 import { Films, Reviews } from './films';
 
 export type UserProcess = {
-  authorizationStatus: AuthorizationStatus;
+    authorizationStatus: AuthorizationStatus;
 }
 
 export type FilmsData = {
@@ -15,7 +15,7 @@ export type FilmsData = {
     };
     reviews: Reviews;
     error: string | null;
-}
+  }
 
 export type State = ReturnType<typeof store.getState>;
 

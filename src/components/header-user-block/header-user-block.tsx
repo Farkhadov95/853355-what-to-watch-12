@@ -2,10 +2,10 @@ import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logoutAction } from '../../store/actions/api-actions';
-import { getAuthorizationStatus } from '../../store/selectors';
+import { authorizationStatusSelector } from '../../store/selectors';
 
 function HeaderUserBlock(): JSX.Element {
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const authorizationStatus = useAppSelector(authorizationStatusSelector);
   const dispatch = useAppDispatch();
 
   return (

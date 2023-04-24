@@ -3,26 +3,26 @@ import FilmCards from '../../components/film-cards/film-cards';
 import GenreItem from '../../components/genre-item/genre-item';
 import { DEFAULT_GENRE, DEFAULT_FILMS_COUNT, STEP_SHOW_MORE } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { getGenre, getFilms } from '../../store/selectors';
+import { filmsSelector, genreSelector } from '../../store/selectors';
 
 function FilmsCatalogScreen():JSX.Element {
 
-  const filmsData = useAppSelector(getFilms);
-  const selectedGenre = useAppSelector(getGenre);
+  const filmsArray = useAppSelector(filmsSelector);
+  const selectedGenre = useAppSelector(genreSelector);
   const [filmsCount, setFilmsCount] = useState(DEFAULT_FILMS_COUNT);
 
   const filmsToDisplay = () => {
     if (selectedGenre === DEFAULT_GENRE) {
-      return filmsData;
+      return filmsArray;
     }
-    return filmsData.filter((film) => film.genre === selectedGenre);
+    return filmsArray.filter((film) => film.genre === selectedGenre);
   };
 
   const incrementFilmsCount = () => {
     setFilmsCount(filmsCount + STEP_SHOW_MORE);
   };
   //TODO: Limit genres list to 10
-  const availableGenres = [DEFAULT_GENRE, ...new Set(filmsData.map((film) => film.genre))];
+  const availableGenres = [DEFAULT_GENRE, ...new Set(filmsArray.map((film) => film.genre))];
 
   return(
     <section className="catalog">

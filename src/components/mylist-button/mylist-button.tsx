@@ -4,7 +4,8 @@ import { useAppSelector } from '../../hooks';
 import { processErrorHandle } from '../../services/process-error-handler';
 import { store } from '../../store';
 import { setFavoriteStatusAction } from '../../store/actions/api-actions';
-import { getAuthorizationStatus, getFilms } from '../../store/selectors';
+import { authorizationStatusSelector, filmsSelector } from '../../store/selectors';
+import { useEffect, useState } from 'react';
 
 type MyListButtonProps = {
     id: number;
@@ -12,15 +13,21 @@ type MyListButtonProps = {
 
 
 function MyListButton({id}: MyListButtonProps): JSX.Element {
-  const authorizationStatus = useAppSelector(getAuthorizationStatus);
-  const filmsData = useAppSelector(getFilms);
+  const authorizationStatus = useAppSelector(authorizationStatusSelector);
+  const filmsArray = useAppSelector(filmsSelector);
   const navigate = useNavigate();
 
-  const film = filmsData.find((item) => item.id === Number(id));
+  const film = filmsArray.find((item) => item.id === Number(id));
   const getFavoritesNumber = () => {
-    const favorites = filmsData.filter((item) => item.isFavorite);
+    const favorites = filmsArray.filter((item) => item.isFavorite);
     return favorites.length;
   };
+
+  const [favoritesCount, setFavoritesCount] = useState(getFavoritesNumber());
+
+  useEffect(() => {
+    setFavoritesCount(getFavoritesNumber());
+  }, [filmsArray]);
 
   const onStatusClick = () => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
@@ -43,7 +50,7 @@ function MyListButton({id}: MyListButtonProps): JSX.Element {
           </svg>
       }
       <span>My list</span>
-      <span className="film-card__count">{getFavoritesNumber()}</span>
+      <span className="film-card__count">{favoritesCount}</span>
     </button>
   );
 }
