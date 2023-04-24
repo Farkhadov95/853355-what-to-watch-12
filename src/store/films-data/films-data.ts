@@ -83,13 +83,6 @@ export const filmsData = createSlice({
     setGenre: (state, action: {payload: string}) => {
       state.genre = action.payload;
     },
-    loadFilm: (state, action: {payload: Film}) => {
-      const {id, isFavorite} = action.payload;
-      const film = state.films.filmsArray.find((filmItem) => filmItem.id === id);
-      if (film) {
-        film.isFavorite = isFavorite;
-      }
-    },
     setFilmsDataLoadingStatus: (state, action: {payload: boolean}) => {
       state.films.isFilmsDataLoading = action.payload;
     },
@@ -140,4 +133,4 @@ export const filmsData = createSlice({
   },
 });
 
-export const { setGenre, loadFilm, setFilmsDataLoadingStatus, setError } = filmsData.actions;
+export const { setGenre, setFilmsDataLoadingStatus, setError } = filmsData.actions;
