@@ -5,9 +5,9 @@ import Logo from '../../components/logo/logo';
 import { useAppSelector } from '../../hooks';
 import { filmsSelector, isFilmsLoadingSelector } from '../../store/selectors';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { checkAuthAction } from '../../store/actions/api-actions';
+import { checkAuthAction } from '../../store/user-process/user-process';
 import { store } from '../../store';
-import { MAX_FILMS_COUNT } from '../../const';
+import { FilmsToRender } from '../../const';
 
 store.dispatch(checkAuthAction());
 
@@ -33,7 +33,7 @@ function MyListScreen(): JSX.Element {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__films-list">
-          <FilmCards films={filmsArray} currentFilmsCount={MAX_FILMS_COUNT}/>
+          <FilmCards films={filmsArray} currentFilmsCount={FilmsToRender.MAX_FILMS_COUNT}/>
         </div>
       </section>
 

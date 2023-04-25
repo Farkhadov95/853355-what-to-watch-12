@@ -4,7 +4,7 @@ import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks';
 import { processErrorHandle } from '../../services/process-error-handler';
 import { store } from '../../store';
-import { setFavoriteStatusAction } from '../../store/actions/api-actions';
+import { setFavoriteStatusAction } from '../../store/films-data/films-data';
 import { authorizationStatusSelector, filmsSelector } from '../../store/selectors';
 
 type MyListButtonProps = {

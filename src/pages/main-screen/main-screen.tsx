@@ -10,7 +10,6 @@ import { filmsSelector, isFilmsLoadingSelector } from '../../store/selectors';
 import FilmsCatalogScreen from '../films-catalog-screen/films-catalog-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 
-
 function MainScreen(): JSX.Element {
   const filmsArray = useAppSelector(filmsSelector);
   const isFilmsDataLoading = useAppSelector(isFilmsLoadingSelector);

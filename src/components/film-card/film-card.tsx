@@ -3,7 +3,6 @@ import { AppRoute } from '../../const';
 import { Film } from '../../types/films';
 import MiniPlayer from '../mini-player/mini-player';
 
-
 type FilmCardProps = {
   film: Film;
   isActive: boolean;

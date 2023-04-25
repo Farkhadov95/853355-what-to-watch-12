@@ -3,10 +3,11 @@ import React from 'react';
 type RatingStarProps = {
     orderNumber: number;
     currentStateID: string;
+    isReviewSending: boolean;
     changeHandler: (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
 }
 
-function RatingStar({orderNumber, changeHandler, currentStateID}: RatingStarProps):JSX.Element {
+function RatingStar({orderNumber, changeHandler, currentStateID, isReviewSending}: RatingStarProps):JSX.Element {
   return (
     <>
       <input
@@ -17,6 +18,7 @@ function RatingStar({orderNumber, changeHandler, currentStateID}: RatingStarProp
         value={orderNumber}
         onChange={changeHandler}
         checked={currentStateID === `${orderNumber}`}
+        disabled={isReviewSending}
       />
       <label className="rating__label" htmlFor={`star-${orderNumber}`}>{`Rating ${orderNumber}`}</label>
     </>

@@ -6,12 +6,10 @@ import { setToken, deleteToken } from '../../services/token';
 import { AuthData } from '../../types/auth-data';
 import { UserData } from '../../types/user-data';
 import { redirectToRoute } from '../actions/action';
-// import { checkAuthAction, loginAction, logoutAction } from '../actions/api-actions';
 
 const initialState: UserProcess = {
   authorizationStatus: AuthorizationStatus.Unknown,
 };
-
 
 export const checkAuthAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;

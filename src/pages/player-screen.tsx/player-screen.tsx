@@ -6,8 +6,6 @@ import { redirectToRoute } from '../../store/actions/action';
 import { filmsSelector } from '../../store/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
-//TODO: Fix page refresh problem
-
 function PlayerScreen(): JSX.Element {
   const {id} = useParams();
   const dispatch = useAppDispatch();
@@ -64,7 +62,6 @@ function PlayerScreen(): JSX.Element {
   if (!film) {
     return <NotFoundScreen />;
   }
-
 
   const onExitButtonClick = () => {
     if (videoRef.current) {
