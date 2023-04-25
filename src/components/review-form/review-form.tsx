@@ -2,9 +2,13 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { store } from '../../store';
-import { postReviewAction } from '../../store/actions/api-actions';
+import { postReviewAction } from '../../store/films-data/films-data';
 import { PostReview } from '../../types/films';
 import RatingStar from '../rating-star/rating-star';
+import { processErrorHandle } from '../../services/process-error-handler';
+import ErrorMessage from '../error-message/error-message';
+import { useAppSelector } from '../../hooks';
+import { isReviewSendingSelector } from '../../store/selectors';
 
 type ReviewFormProps = {
   id: number;
@@ -12,6 +16,7 @@ type ReviewFormProps = {
 
 function ReviewForm({id}: ReviewFormProps): JSX.Element {
   const navigate = useNavigate();
+  const isReviewSending = useAppSelector(isReviewSendingSelector);
   const starsCount = Array.from({length: 10}, (_, i) => (10 - i));
   const [reviewInfo, setReviewInfo] = useState({
     comment: '',
@@ -31,12 +36,17 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
 
   const onSubmitHandler = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    if (reviewInfo.comment.length < 50 || reviewInfo.comment.length > 400) {
+      processErrorHandle('The comment must be between 50 and 400 characters long.');
+      return;
+    }
     store.dispatch(postReviewAction({id, review}));
     navigate(`${AppRoute.Film}/${id}`);
   };
 
   return (
     <form action="#" className="add-review__form" onSubmit={onSubmitHandler}>
+      <ErrorMessage />
       <div className="rating">
         <div className="rating__stars">
           {
@@ -45,6 +55,7 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
                 orderNumber={i}
                 changeHandler={onChangeHandler}
                 currentStateID={reviewInfo['rating']}
+                isReviewSending={isReviewSending}
               />
             ))
           }
@@ -57,13 +68,12 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
           id="review-text"
           placeholder="Review text"
           onChange={onChangeHandler}
-          defaultValue={reviewInfo.comment}
-          minLength={50}
-          maxLength={400}
+          value={reviewInfo.comment}
+          disabled={isReviewSending}
         >
         </textarea>
         <div className="add-review__submit">
-          <button disabled={!reviewInfo.comment || !reviewInfo.rating} className="add-review__btn" type="submit">Post</button>
+          <button disabled={!reviewInfo.comment || !reviewInfo.rating || isReviewSending} className="add-review__btn" type="submit">Post</button>
         </div>
 
       </div>

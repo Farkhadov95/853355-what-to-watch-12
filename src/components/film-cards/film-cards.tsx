@@ -18,8 +18,6 @@ function FilmCards({films, currentFilmsCount}: FilmCardsProps): JSX.Element {
     setActiveFilmId(null);
   };
 
-  //TODO: Stop rerender all cards on mouse over
-
   return (
     <>
       {films.slice(0, currentFilmsCount).map((filmItem) => (

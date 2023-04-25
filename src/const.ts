@@ -38,9 +38,11 @@ export enum TabNames {
   Reviews = 'Reviews',
 }
 
-export const DEFAULT_GENRE = 'All genres';
+export enum FilmsToRender {
+  DEFAULT_FILMS_COUNT = 8,
+  STEP_SHOW_MORE = 8,
+  MORE_LIKE_COUNT = 4,
+  MAX_FILMS_COUNT = 999,
+}
 
-export const DEFAULT_FILMS_COUNT = 8;
-export const STEP_SHOW_MORE = 8;
-export const MORE_LIKE_COUNT = 4;
-export const MAX_FILMS_COUNT = 999;
+export const DEFAULT_GENRE = 'All genres';

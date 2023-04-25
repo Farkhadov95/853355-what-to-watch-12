@@ -6,7 +6,7 @@ import Logo from '../../components/logo/logo';
 import { AppRoute } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { processErrorHandle } from '../../services/process-error-handler';
-import { loginAction } from '../../store/actions/api-actions';
+import { loginAction } from '../../store/user-process/user-process';
 import { AuthData } from '../../types/auth-data';
 
 function SignInScreen(): JSX.Element {

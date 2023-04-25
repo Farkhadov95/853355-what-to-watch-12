@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { logoutAction } from '../../store/actions/api-actions';
+import { logoutAction } from '../../store/user-process/user-process';
 import { authorizationStatusSelector } from '../../store/selectors';
 
 function HeaderUserBlock(): JSX.Element {
