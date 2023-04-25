@@ -3,14 +3,14 @@ import HeaderUserBlock from '../../components/header-user-block/header-user-bloc
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import { useAppSelector } from '../../hooks';
-import { filmSelector} from '../../store/selectors';
+import { filmsSelector} from '../../store/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 
 function AddReviewScreen(): JSX.Element {
   const {id} = useParams();
-  const {filmsData} = useAppSelector(filmSelector);
+  const filmsArray = useAppSelector(filmsSelector);
 
-  const film = filmsData.find((item) => item.id === Number(id));
+  const film = filmsArray.find((item) => item.id === Number(id));
 
   if (!film) {
     return <NotFoundScreen />;
@@ -50,7 +50,7 @@ function AddReviewScreen(): JSX.Element {
       </div>
 
       <div className="add-review">
-        <ReviewForm />
+        <ReviewForm id={Number(id)}/>
       </div>
 
     </section>

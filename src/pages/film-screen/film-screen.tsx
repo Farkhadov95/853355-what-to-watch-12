@@ -1,20 +1,43 @@
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
 import FilmCards from '../../components/film-cards/film-cards';
 import { useAppSelector } from '../../hooks';
-import { filmSelector, isFilmsLoadingSelector } from '../../store/selectors';
-import { Link, useParams } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { authorizationStatusSelector, isFilmsLoadingSelector, reviewsSelector, similarFilmsSelector } from '../../store/selectors';
+import { AppRoute, AuthorizationStatus, MORE_LIKE_COUNT, TabNames } from '../../const';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import { getFilmSatisfaction } from '../../utils/utils';
 import LoadingScreen from '../loading-screen/loading-screen';
+import FilmReviews from '../../components/film-info/film-reviews';
+import FilmOverview from '../../components/film-info/film-overview';
+import FilmDetails from '../../components/film-info/film-details';
+import classNames from 'classnames';
+import { fetchFilmReviewsAction, fetchSimilarFilmsAction } from '../../store/actions/api-actions';
+import { store } from '../../store';
+import MyListButton from '../../components/mylist-button/mylist-button';
 
 
-function FilmOverviewScreen():JSX.Element {
+function FilmScreen():JSX.Element {
   const {id} = useParams();
-  const { filmsData } = useAppSelector(filmSelector);
+  const authorizationStatus = useAppSelector(authorizationStatusSelector);
+  const similarFilms = useAppSelector(similarFilmsSelector);
   const isFilmsDataLoading = useAppSelector(isFilmsLoadingSelector);
+  const reviews = useAppSelector(reviewsSelector);
+
+  useEffect(() => {
+    async function fetchData() {
+      store.dispatch(fetchFilmReviewsAction(Number(id)));
+      await store.dispatch(fetchSimilarFilmsAction({id: Number(id)}));
+    }
+    fetchData();
+  }, [id]);
+
+  const [activeTab, setActiveTab] = useState('Overview');
+
+  const handlerTabChange = (tabName: TabNames) => {
+    setActiveTab(tabName);
+  };
 
   if (isFilmsDataLoading) {
     return (
@@ -22,13 +45,11 @@ function FilmOverviewScreen():JSX.Element {
     );
   }
 
-  const film = filmsData.find((item) => item.id === Number(id));
+  const film = similarFilms.find((item) => item.id === Number(id));
 
   if (!film) {
     return <NotFoundScreen />;
   }
-
-  const filmSatisfaction = getFilmSatisfaction(film.rating);
 
   return (
     <>
@@ -54,22 +75,20 @@ function FilmOverviewScreen():JSX.Element {
               </p>
 
               <div className="film-card__buttons">
-                <Link to={`${AppRoute.Player}/${film.id}`}>
-                  <button className="btn btn--play film-card__button" type="button">
+                <button className="btn btn--play film-card__button" type="button">
+                  <Link to={`${AppRoute.Player}/${film.id}`} title='player' style={{textDecoration: 'none' , color: '#eee5b5'}}>
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
                     <span>Play</span>
-                  </button>
-                </Link>
-                <button className="btn btn--list film-card__button" type="button">
-                  <svg viewBox="0 0 18 14" width="18" height="14">
-                    <use xlinkHref="#in-list"></use>
-                  </svg>
-                  <span>My list</span>
-                  <span className="film-card__count">9</span>
+                  </Link>
                 </button>
-                <Link to={`${AppRoute.Review}/${film.id}`} className="btn film-card__button">Add review</Link>
+                <MyListButton id={film.id}/>
+                {
+                  authorizationStatus === AuthorizationStatus.Auth
+                    ? <Link to={`${AppRoute.Review}/${film.id}`} className="btn film-card__button">Add review</Link>
+                    : ''
+                }
               </div>
             </div>
           </div>
@@ -84,33 +103,19 @@ function FilmOverviewScreen():JSX.Element {
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
-                  <li className="film-nav__item film-nav__item--active">
-                    <a href="#" className="film-nav__link">Overview</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Details</a>
-                  </li>
-                  <li className="film-nav__item">
-                    <a href="#" className="film-nav__link">Reviews</a>
-                  </li>
+                  {
+                    Object.values(TabNames).map((tabName) => (
+                      <li key={tabName} className={classNames('film-nav__item', {'film-nav__item--active' : activeTab === tabName})}>
+                        <Link to="#" className="film-nav__link" onClick={() => handlerTabChange(tabName)}>{tabName}</Link>
+                      </li>
+                    ))
+                  }
                 </ul>
               </nav>
+              {activeTab === 'Overview' && <FilmOverview film={film} />}
+              {activeTab === 'Details' && <FilmDetails film={film} />}
+              {activeTab === 'Reviews' && <FilmReviews reviews={reviews} />}
 
-              <div className="film-rating">
-                <div className="film-rating__score">{film.rating}</div>
-                <p className="film-rating__meta">
-                  <span className="film-rating__level">{filmSatisfaction}</span>
-                  <span className="film-rating__count">{film.scoresCount} ratings</span>
-                </p>
-              </div>
-
-              <div className="film-card__text">
-                <p>{film.description.info}</p>
-
-                <p className="film-card__director"><strong>Director: {film.director}</strong></p>
-
-                <p className="film-card__starring"><strong>Starring: {(film.starring).join(', ')}</strong></p>
-              </div>
             </div>
           </div>
         </div>
@@ -119,7 +124,7 @@ function FilmOverviewScreen():JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
           <div className="catalog__films-list">
-            <FilmCards films={filmsData.slice(0, 4)}/>
+            <FilmCards films={similarFilms} currentFilmsCount={MORE_LIKE_COUNT}/>
           </div>
         </section>
         <Footer />
@@ -128,4 +133,4 @@ function FilmOverviewScreen():JSX.Element {
   );
 }
 
-export default FilmOverviewScreen;
+export default FilmScreen;

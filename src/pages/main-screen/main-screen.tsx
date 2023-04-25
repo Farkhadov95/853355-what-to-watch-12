@@ -3,15 +3,16 @@ import { Link } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
+import MyListButton from '../../components/mylist-button/mylist-button';
 import { AppRoute } from '../../const';
 import { useAppSelector } from '../../hooks';
-import { filmSelector, isFilmsLoadingSelector } from '../../store/selectors';
+import { filmsSelector, isFilmsLoadingSelector } from '../../store/selectors';
 import FilmsCatalogScreen from '../films-catalog-screen/films-catalog-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 
 
 function MainScreen(): JSX.Element {
-  const {filmsData} = useAppSelector(filmSelector);
+  const filmsArray = useAppSelector(filmsSelector);
   const isFilmsDataLoading = useAppSelector(isFilmsLoadingSelector);
 
   if (isFilmsDataLoading) {
@@ -19,7 +20,7 @@ function MainScreen(): JSX.Element {
       <LoadingScreen />
     );
   }
-  const film = filmsData[0];
+  const film = filmsArray[0];
 
   return (
     <React.Fragment>
@@ -44,24 +45,16 @@ function MainScreen(): JSX.Element {
                 <span className="film-card__year">{film.released}</span>
               </p>
               <div className="film-card__buttons">
-                <Link to={`${AppRoute.Player}/${film.id}`} title='player' style={{textDecoration: 'none'}}>
-                  <button className="btn btn--play film-card__button" type="button">
+                <button className="btn btn--play film-card__button" type="button">
+                  <Link to={`${AppRoute.Player}/${film.id}`} title='player' style={{textDecoration: 'none' , color: '#eee5b5'}}>
                     <svg viewBox="0 0 19 19" width="19" height="19">
                       <use xlinkHref="#play-s"></use>
                     </svg>
                     <span>Play</span>
-                  </button>
-                </Link>
+                  </Link>
+                </button>
 
-                <Link to={`${AppRoute.MyList}`} title='myList' style={{textDecoration: 'none'}}>
-                  <button className="btn btn--list film-card__button" type="button">
-                    <svg viewBox="0 0 19 20" width="19" height="20">
-                      <use xlinkHref="#add"></use>
-                    </svg>
-                    <span>My list</span>
-                    <span className="film-card__count">9</span>
-                  </button>
-                </Link>
+                <MyListButton id={film.id}/>
 
               </div>
             </div>

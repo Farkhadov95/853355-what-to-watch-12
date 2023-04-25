@@ -27,4 +27,20 @@ export enum StatusCodes {
   NOT_FOUND = 404,
 }
 
+export enum NameSpace {
+  Data = 'DATA',
+  User = 'USER',
+}
+
+export enum TabNames {
+  Overview = 'Overview',
+  Details = 'Details',
+  Reviews = 'Reviews',
+}
+
 export const DEFAULT_GENRE = 'All genres';
+
+export const DEFAULT_FILMS_COUNT = 8;
+export const STEP_SHOW_MORE = 8;
+export const MORE_LIKE_COUNT = 4;
+export const MAX_FILMS_COUNT = 999;

@@ -15,15 +15,17 @@ function FilmCard({film, isActive = false, mouseOverHandler, mouseOutHandler}: F
 
   return (
     <article className="small-film-card catalog__films-card">
-      <div className="small-film-card__image"
-        onMouseOver={() => mouseOverHandler(film.id)}
-        onMouseOut={()=> mouseOutHandler()}
-      >
-        <MiniPlayer film={film} isActive={isActive}/>
-      </div>
-      <h3 className="small-film-card__title">
-        <Link to={`${AppRoute.Film}/${film.id}`} className="small-film-card__link">{film.name}</Link>
-      </h3>
+      <Link to={`${AppRoute.Film}/${film.id}`} className="small-film-card__link">
+        <div className="small-film-card__image"
+          onMouseOver={() => mouseOverHandler(film.id)}
+          onMouseOut={()=> mouseOutHandler()}
+        >
+          <MiniPlayer film={film} isActive={isActive}/>
+        </div>
+        <h3 className="small-film-card__title">
+          {film.name}
+        </h3>
+      </Link>
     </article>
   );
 }

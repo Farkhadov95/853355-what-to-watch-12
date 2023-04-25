@@ -24,20 +24,21 @@ export type FilmDescription = {
   cast: string[];
 }
 
-export type Rating = {
-  ratingTotal: number;
-  ratingCategory: string;
-  ratingVotes: number;
-  reviews: Review[];
+export type PostReview = {
+  comment: string;
+  rating: number;
 }
 
 export type Review = {
-  movieName: string;
-  text: string;
-  rating: number;
-  ratingCategory: string;
-  reviewDate: string;
-  reviewer: string;
+  comment : string;
+  rating : number;
+  date : string;
+  id : number;
+  user : {
+    id: number;
+    name: string;
+  };
 }
 
 export type Films = Film[];
+export type Reviews = Review[];
