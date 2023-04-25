@@ -12,6 +12,7 @@ export type FilmsData = {
       filmsArray: Films;
       similarFilms: Films;
       isFilmsDataLoading: boolean;
+      isReviewSending: boolean;
     };
     reviews: Reviews;
     error: string | null;

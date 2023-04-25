@@ -8,5 +8,6 @@ export const reviewsSelector = (state: State): Reviews => state[NameSpace.Data].
 export const genreSelector = (state: State): string => state[NameSpace.Data].genre;
 export const isFilmsLoadingSelector = (state: State): boolean => state[NameSpace.Data].films.isFilmsDataLoading;
 export const errorSelector = (state: State): string | null => state[NameSpace.Data].error;
+export const isReviewSendingSelector = (state: State): boolean => state[NameSpace.Data].films.isReviewSending;
 
 export const authorizationStatusSelector = (state: State): AuthorizationStatus => state[NameSpace.User].authorizationStatus;

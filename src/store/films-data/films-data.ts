@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { DEFAULT_GENRE, NameSpace } from '../../const';
 import { AppDispatch, FilmsData, State } from '../../types/state';
-// import { fetchFilmReviewsAction, fetchFilmsDataAction, fetchSimilarFilmsAction } from '../actions/api-actions';
 import { Film, Films, PostReview, Reviews } from '../../types/films';
 import { AxiosInstance } from 'axios';
 
@@ -11,6 +10,7 @@ const initialState: FilmsData = {
     filmsArray: [],
     similarFilms: [],
     isFilmsDataLoading: false,
+    isReviewSending: false,
   },
   reviews: [],
   error: null,
@@ -129,6 +129,13 @@ export const filmsData = createSlice({
           film.isFavorite = isFavorite;
         }
         state.films.isFilmsDataLoading = false;
+      })
+      .addCase(postReviewAction.pending, (state) => {
+        state.films.isReviewSending = true;
+      })
+      .addCase(postReviewAction.fulfilled, (state, action) => {
+        state.reviews = action.payload;
+        state.films.isReviewSending = false;
       });
   },
 });

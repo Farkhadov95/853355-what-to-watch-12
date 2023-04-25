@@ -6,17 +6,16 @@ import Logo from '../../components/logo/logo';
 import FilmCards from '../../components/film-cards/film-cards';
 import { useAppSelector } from '../../hooks';
 import { authorizationStatusSelector, isFilmsLoadingSelector, reviewsSelector, similarFilmsSelector } from '../../store/selectors';
-import { AppRoute, AuthorizationStatus, MORE_LIKE_COUNT, TabNames } from '../../const';
+import { AppRoute, AuthorizationStatus, FilmsToRender, TabNames } from '../../const';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 import FilmReviews from '../../components/film-info/film-reviews';
 import FilmOverview from '../../components/film-info/film-overview';
 import FilmDetails from '../../components/film-info/film-details';
 import classNames from 'classnames';
-import { fetchFilmReviewsAction, fetchSimilarFilmsAction } from '../../store/actions/api-actions';
+import { fetchFilmReviewsAction, fetchSimilarFilmsAction } from '../../store/films-data/films-data';
 import { store } from '../../store';
 import MyListButton from '../../components/mylist-button/mylist-button';
-
 
 function FilmScreen():JSX.Element {
   const {id} = useParams();
@@ -124,7 +123,7 @@ function FilmScreen():JSX.Element {
         <section className="catalog catalog--like-this">
           <h2 className="catalog__title">More like this</h2>
           <div className="catalog__films-list">
-            <FilmCards films={similarFilms} currentFilmsCount={MORE_LIKE_COUNT}/>
+            <FilmCards films={similarFilms} currentFilmsCount={FilmsToRender.MORE_LIKE_COUNT}/>
           </div>
         </section>
         <Footer />
