@@ -10,8 +10,6 @@ type ReviewFormProps = {
   id: number;
 }
 
-
-//TODO: Add validation
 function ReviewForm({id}: ReviewFormProps): JSX.Element {
   const navigate = useNavigate();
   const starsCount = Array.from({length: 10}, (_, i) => (10 - i));
@@ -28,7 +26,7 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
 
   const review: PostReview = {
     comment: reviewInfo.comment,
-    rating: Number(reviewInfo['rating']),
+    rating: Number(reviewInfo.rating),
   };
 
   const onSubmitHandler = (evt: React.FormEvent<HTMLFormElement>) => {
@@ -60,10 +58,12 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
           placeholder="Review text"
           onChange={onChangeHandler}
           defaultValue={reviewInfo.comment}
+          minLength={50}
+          maxLength={400}
         >
         </textarea>
         <div className="add-review__submit">
-          <button className="add-review__btn" type="submit">Post</button>
+          <button disabled={!reviewInfo.comment || !reviewInfo.rating} className="add-review__btn" type="submit">Post</button>
         </div>
 
       </div>

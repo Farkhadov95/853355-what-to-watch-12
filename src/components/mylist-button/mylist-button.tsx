@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { useAppSelector } from '../../hooks';
@@ -5,12 +6,10 @@ import { processErrorHandle } from '../../services/process-error-handler';
 import { store } from '../../store';
 import { setFavoriteStatusAction } from '../../store/actions/api-actions';
 import { authorizationStatusSelector, filmsSelector } from '../../store/selectors';
-import { useEffect, useState } from 'react';
 
 type MyListButtonProps = {
     id: number;
 }
-
 
 function MyListButton({id}: MyListButtonProps): JSX.Element {
   const authorizationStatus = useAppSelector(authorizationStatusSelector);

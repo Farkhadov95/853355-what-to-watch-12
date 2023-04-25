@@ -32,7 +32,14 @@ export enum NameSpace {
   User = 'USER',
 }
 
+export enum TabNames {
+  Overview = 'Overview',
+  Details = 'Details',
+  Reviews = 'Reviews',
+}
+
 export const DEFAULT_GENRE = 'All genres';
+
 export const DEFAULT_FILMS_COUNT = 8;
 export const STEP_SHOW_MORE = 8;
 export const MORE_LIKE_COUNT = 4;

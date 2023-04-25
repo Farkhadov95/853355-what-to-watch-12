@@ -1,12 +1,12 @@
 import { Review } from '../../types/films';
-import moment from 'moment';
+import { format } from 'date-fns';
 
 type FilmReviewProps = {
   review: Review;
 }
 
 function FilmReview({review}: FilmReviewProps): JSX.Element {
-  const date = moment(review.date).format('LL');
+  const date = format(new Date(review.date), 'MMMM dd, yyyy');
 
   return (
     <div className="review">

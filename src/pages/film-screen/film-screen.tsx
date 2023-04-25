@@ -1,15 +1,15 @@
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import Footer from '../../components/footer/footer';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
 import FilmCards from '../../components/film-cards/film-cards';
 import { useAppSelector } from '../../hooks';
 import { authorizationStatusSelector, isFilmsLoadingSelector, reviewsSelector, similarFilmsSelector } from '../../store/selectors';
-import { Link, useParams } from 'react-router-dom';
-import { AppRoute, AuthorizationStatus, MORE_LIKE_COUNT } from '../../const';
+import { AppRoute, AuthorizationStatus, MORE_LIKE_COUNT, TabNames } from '../../const';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
 import FilmReviews from '../../components/film-info/film-reviews';
-import { useEffect, useState } from 'react';
 import FilmOverview from '../../components/film-info/film-overview';
 import FilmDetails from '../../components/film-info/film-details';
 import classNames from 'classnames';
@@ -25,12 +25,9 @@ function FilmScreen():JSX.Element {
   const isFilmsDataLoading = useAppSelector(isFilmsLoadingSelector);
   const reviews = useAppSelector(reviewsSelector);
 
-  const [isReviewsLoading, setIsReviewsLoading] = useState(true);
-
   useEffect(() => {
     async function fetchData() {
-      await store.dispatch(fetchFilmReviewsAction(Number(id)));
-      setIsReviewsLoading(false);
+      store.dispatch(fetchFilmReviewsAction(Number(id)));
       await store.dispatch(fetchSimilarFilmsAction({id: Number(id)}));
     }
     fetchData();
@@ -38,19 +35,11 @@ function FilmScreen():JSX.Element {
 
   const [activeTab, setActiveTab] = useState('Overview');
 
-  const showOverview = () => {
-    setActiveTab('Overview');
+  const handlerTabChange = (tabName: TabNames) => {
+    setActiveTab(tabName);
   };
 
-  const showDetails = () => {
-    setActiveTab('Details');
-  };
-
-  const showReviews = () => {
-    setActiveTab('Reviews');
-  };
-
-  if (isFilmsDataLoading || isReviewsLoading) {
+  if (isFilmsDataLoading) {
     return (
       <LoadingScreen />
     );
@@ -112,15 +101,13 @@ function FilmScreen():JSX.Element {
             <div className="film-card__desc">
               <nav className="film-nav film-card__nav">
                 <ul className="film-nav__list">
-                  <li className={classNames('film-nav__item', {'film-nav__item--active' : activeTab === 'Overview'})}>
-                    <Link to="#" className="film-nav__link" onClick={showOverview} >Overview</Link>
-                  </li>
-                  <li className={classNames('film-nav__item', {'film-nav__item--active' : activeTab === 'Details'})}>
-                    <Link to="#" className="film-nav__link" onClick={showDetails}>Details</Link>
-                  </li>
-                  <li className={classNames('film-nav__item', {'film-nav__item--active' : activeTab === 'Reviews'})}>
-                    <Link to="#" className="film-nav__link" onClick={showReviews}>Reviews</Link>
-                  </li>
+                  {
+                    Object.values(TabNames).map((tabName) => (
+                      <li key={tabName} className={classNames('film-nav__item', {'film-nav__item--active' : activeTab === tabName})}>
+                        <Link to="#" className="film-nav__link" onClick={() => handlerTabChange(tabName)}>{tabName}</Link>
+                      </li>
+                    ))
+                  }
                 </ul>
               </nav>
               {activeTab === 'Overview' && <FilmOverview film={film} />}
