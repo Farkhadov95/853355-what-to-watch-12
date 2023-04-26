@@ -19,6 +19,7 @@ function MainScreen(): JSX.Element {
       <LoadingScreen />
     );
   }
+
   const film = filmsArray[0];
 
   return (

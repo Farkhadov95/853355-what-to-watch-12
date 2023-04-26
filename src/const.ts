@@ -4,7 +4,7 @@ export enum AppRoute {
   Login = '/login',
   Player = '/player',
   Root = '/',
-  Film = '/film',
+  Films = '/films',
   MyList = '/myList',
   Review = '/review'
 }
@@ -43,6 +43,15 @@ export enum FilmsToRender {
   STEP_SHOW_MORE = 8,
   MORE_LIKE_COUNT = 4,
   MAX_FILMS_COUNT = 999,
+}
+
+export enum ErrorMessages {
+  FILMS_LOAD = 'Failed to load films',
+  FILM_LOAD = 'Failed to load film',
+  REVIEW_SEND = 'Failed to send review',
+  REVIEWS_LOAD = 'Failed to load reviews',
+  FAVORITE_STATUS_CHANGE= 'Failed to change status',
+  INVALID_LOGIN_DATA = 'Please, enter your email and password',
 }
 
 export const DEFAULT_GENRE = 'All genres';

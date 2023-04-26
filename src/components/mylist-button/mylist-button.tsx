@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { useAppSelector } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { processErrorHandle } from '../../services/process-error-handler';
-import { store } from '../../store';
 import { setFavoriteStatusAction } from '../../store/films-data/films-data';
 import { authorizationStatusSelector, filmsSelector } from '../../store/selectors';
 
@@ -14,6 +13,7 @@ type MyListButtonProps = {
 function MyListButton({id}: MyListButtonProps): JSX.Element {
   const authorizationStatus = useAppSelector(authorizationStatusSelector);
   const filmsArray = useAppSelector(filmsSelector);
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
   const film = filmsArray.find((item) => item.id === Number(id));
@@ -30,7 +30,7 @@ function MyListButton({id}: MyListButtonProps): JSX.Element {
 
   const onStatusClick = () => {
     if (authorizationStatus === AuthorizationStatus.Auth) {
-      store.dispatch(setFavoriteStatusAction({id: Number(id), status: film?.isFavorite ? 0 : 1}));
+      dispatch(setFavoriteStatusAction({id: Number(id), status: film?.isFavorite ? 0 : 1}));
     } else {
       navigate(AppRoute.Login);
       processErrorHandle('Please, log in to add this film to your list');

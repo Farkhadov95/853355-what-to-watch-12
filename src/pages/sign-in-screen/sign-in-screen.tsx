@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import ErrorMessage from '../../components/error-message/error-message';
 import Footer from '../../components/footer/footer';
 import Logo from '../../components/logo/logo';
-import { AppRoute } from '../../const';
+import { AppRoute, ErrorMessages } from '../../const';
 import { useAppDispatch } from '../../hooks';
 import { processErrorHandle } from '../../services/process-error-handler';
 import { loginAction } from '../../store/user-process/user-process';
@@ -30,7 +30,7 @@ function SignInScreen(): JSX.Element {
       });
       navigate(AppRoute.Root);
     } else {
-      processErrorHandle('Please, enter your email and password');
+      processErrorHandle(ErrorMessages.INVALID_LOGIN_DATA);
     }
   };
 

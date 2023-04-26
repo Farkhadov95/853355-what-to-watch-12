@@ -3,21 +3,39 @@ import { useParams } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { redirectToRoute } from '../../store/actions/action';
-import { filmsSelector } from '../../store/selectors';
+import { errorSelector, filmSelector } from '../../store/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import { fetchFilmAction } from '../../store/films-data/films-data';
+import ErrorMessage from '../../components/error-message/error-message';
+import { processErrorHandle } from '../../services/process-error-handler';
 
 function PlayerScreen(): JSX.Element {
   const {id} = useParams();
   const dispatch = useAppDispatch();
-  const filmsArray = useAppSelector(filmsSelector);
+  const errorMessage = useAppSelector(errorSelector);
+
   const videoRef = useRef<HTMLVideoElement>(null);
+
+  const film = useAppSelector(filmSelector);
+
+  useEffect(() => {
+    async function fetchData() {
+      await dispatch(fetchFilmAction({id: Number(id)}));
+    }
+    fetchData();
+  }, [id]);
+
+  useEffect(() => {
+    if (errorMessage) {
+      processErrorHandle(errorMessage);
+    }
+  }, [id, errorMessage]);
 
   const [isPlaying, setIsPlaying] = useState(true);
   const [progress, setProgress] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
-  const film = filmsArray.find((item) => item.id === Number(id));
 
   useEffect(() => {
     if (videoRef.current) {
@@ -60,7 +78,7 @@ function PlayerScreen(): JSX.Element {
   }, [videoRef]);
 
   if (!film) {
-    return <NotFoundScreen />;
+    return <><ErrorMessage /><NotFoundScreen /></>;
   }
 
   const onExitButtonClick = () => {
@@ -102,7 +120,7 @@ function PlayerScreen(): JSX.Element {
       <video
         className="player__video"
         src={film.videoLink}
-        poster="img/player-poster.jpg"
+        poster={film.previewImage}
         ref={videoRef}
         autoPlay
       >

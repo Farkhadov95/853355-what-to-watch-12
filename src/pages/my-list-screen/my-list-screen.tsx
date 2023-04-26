@@ -5,15 +5,23 @@ import Logo from '../../components/logo/logo';
 import { useAppSelector } from '../../hooks';
 import { filmsSelector, isFilmsLoadingSelector } from '../../store/selectors';
 import LoadingScreen from '../loading-screen/loading-screen';
-import { checkAuthAction } from '../../store/user-process/user-process';
-import { store } from '../../store';
 import { FilmsToRender } from '../../const';
-
-store.dispatch(checkAuthAction());
+import { useEffect, useState } from 'react';
 
 function MyListScreen(): JSX.Element {
   const filmsArray = useAppSelector(filmsSelector);
   const isFilmsDataLoading = useAppSelector(isFilmsLoadingSelector);
+
+  const getFavorites = () => {
+    const favorites = filmsArray.filter((item) => item.isFavorite);
+    return favorites;
+  };
+
+  const [favoritesCount, setFavoritesCount] = useState(getFavorites().length);
+
+  useEffect(() => {
+    setFavoritesCount(getFavorites().length);
+  }, [filmsArray]);
 
   if (isFilmsDataLoading) {
     return (
@@ -25,7 +33,7 @@ function MyListScreen(): JSX.Element {
     <div className="user-page">
       <header className="page-header user-page__head">
         <Logo />
-        <h1 className="page-title user-page__title">My list <span className="user-page__film-count">9</span></h1>
+        <h1 className="page-title user-page__title">My list <span className="user-page__film-count">{favoritesCount}</span></h1>
         <HeaderUserBlock />
       </header>
 
@@ -33,7 +41,8 @@ function MyListScreen(): JSX.Element {
         <h2 className="catalog__title visually-hidden">Catalog</h2>
 
         <div className="catalog__films-list">
-          <FilmCards films={filmsArray} currentFilmsCount={FilmsToRender.MAX_FILMS_COUNT}/>
+          {favoritesCount === 0 && <h2 className="catalog__title">You have not added any films to your list yet</h2>}
+          <FilmCards films={getFavorites()} currentFilmsCount={FilmsToRender.MAX_FILMS_COUNT}/>
         </div>
       </section>
 
