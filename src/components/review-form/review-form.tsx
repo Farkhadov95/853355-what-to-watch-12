@@ -1,27 +1,31 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { AppRoute } from '../../const';
-import { store } from '../../store';
+import React, { useEffect, useState } from 'react';
 import { postReviewAction } from '../../store/films-data/films-data';
 import { PostReview } from '../../types/films';
 import RatingStar from '../rating-star/rating-star';
 import { processErrorHandle } from '../../services/process-error-handler';
 import ErrorMessage from '../error-message/error-message';
-import { useAppSelector } from '../../hooks';
-import { isReviewSendingSelector } from '../../store/selectors';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { errorSelector, isReviewSendingSelector } from '../../store/selectors';
 
 type ReviewFormProps = {
   id: number;
 }
 
 function ReviewForm({id}: ReviewFormProps): JSX.Element {
-  const navigate = useNavigate();
   const isReviewSending = useAppSelector(isReviewSendingSelector);
+  const errorMessage = useAppSelector(errorSelector);
+  const dispatch = useAppDispatch();
   const starsCount = Array.from({length: 10}, (_, i) => (10 - i));
   const [reviewInfo, setReviewInfo] = useState({
     comment: '',
     rating: '',
   });
+
+  useEffect(() => {
+    if (errorMessage) {
+      processErrorHandle(errorMessage);
+    }
+  }, [errorMessage]);
 
   const onChangeHandler = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement >) => {
     evt.persist();
@@ -40,8 +44,7 @@ function ReviewForm({id}: ReviewFormProps): JSX.Element {
       processErrorHandle('The comment must be between 50 and 400 characters long.');
       return;
     }
-    store.dispatch(postReviewAction({id, review}));
-    navigate(`${AppRoute.Film}/${id}`);
+    dispatch(postReviewAction({id, review}));
   };
 
   return (

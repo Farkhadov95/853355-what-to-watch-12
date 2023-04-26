@@ -39,7 +39,7 @@ function App(): JSX.Element {
           }
         />
         <Route
-          path={`${AppRoute.Film}/:id`}
+          path={`${AppRoute.Films}/:id`}
           element={
             <FilmScreen />
           }

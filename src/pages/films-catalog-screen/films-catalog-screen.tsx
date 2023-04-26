@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import FilmCards from '../../components/film-cards/film-cards';
 import GenreItem from '../../components/genre-item/genre-item';
 import { DEFAULT_GENRE, FilmsToRender } from '../../const';
@@ -24,12 +24,16 @@ function FilmsCatalogScreen():JSX.Element {
 
   const availableGenres = [DEFAULT_GENRE, ...new Set(filmsArray.map((film) => film.genre))];
 
+  useEffect(() => {
+    setFilmsCount(FilmsToRender.DEFAULT_FILMS_COUNT);
+  }, [selectedGenre]);
+
   return(
     <section className="catalog">
       <h2 className="catalog__title visually-hidden">Catalog</h2>
       <ul className="catalog__genres-list">
         {
-          availableGenres.map((genre) =>
+          availableGenres.slice(0, 10).map((genre) =>
             <GenreItem key={genre} genre={genre} isActive={selectedGenre === genre} />)
         }
       </ul>

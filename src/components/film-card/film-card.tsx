@@ -14,7 +14,7 @@ function FilmCard({film, isActive = false, mouseOverHandler, mouseOutHandler}: F
 
   return (
     <article className="small-film-card catalog__films-card">
-      <Link to={`${AppRoute.Film}/${film.id}`} className="small-film-card__link">
+      <Link to={`${AppRoute.Films}/${film.id}`} className="small-film-card__link">
         <div className="small-film-card__image"
           onMouseOver={() => mouseOverHandler(film.id)}
           onMouseOut={()=> mouseOutHandler()}

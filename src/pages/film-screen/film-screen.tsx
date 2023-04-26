@@ -4,8 +4,8 @@ import Footer from '../../components/footer/footer';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
 import FilmCards from '../../components/film-cards/film-cards';
-import { useAppSelector } from '../../hooks';
-import { authorizationStatusSelector, isFilmsLoadingSelector, reviewsSelector, similarFilmsSelector } from '../../store/selectors';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { authorizationStatusSelector, errorSelector, filmSelector, isFilmsLoadingSelector, reviewsSelector, similarFilmsSelector } from '../../store/selectors';
 import { AppRoute, AuthorizationStatus, FilmsToRender, TabNames } from '../../const';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import LoadingScreen from '../loading-screen/loading-screen';
@@ -13,24 +13,35 @@ import FilmReviews from '../../components/film-info/film-reviews';
 import FilmOverview from '../../components/film-info/film-overview';
 import FilmDetails from '../../components/film-info/film-details';
 import classNames from 'classnames';
-import { fetchFilmReviewsAction, fetchSimilarFilmsAction } from '../../store/films-data/films-data';
-import { store } from '../../store';
+import { fetchFilmAction, fetchFilmReviewsAction, fetchSimilarFilmsAction } from '../../store/films-data/films-data';
 import MyListButton from '../../components/mylist-button/mylist-button';
+import ErrorMessage from '../../components/error-message/error-message';
+import { processErrorHandle } from '../../services/process-error-handler';
 
 function FilmScreen():JSX.Element {
   const {id} = useParams();
   const authorizationStatus = useAppSelector(authorizationStatusSelector);
+  const film = useAppSelector(filmSelector);
   const similarFilms = useAppSelector(similarFilmsSelector);
   const isFilmsDataLoading = useAppSelector(isFilmsLoadingSelector);
   const reviews = useAppSelector(reviewsSelector);
+  const errorMessage = useAppSelector(errorSelector);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     async function fetchData() {
-      store.dispatch(fetchFilmReviewsAction(Number(id)));
-      await store.dispatch(fetchSimilarFilmsAction({id: Number(id)}));
+      dispatch(fetchFilmAction({id: Number(id)}));
+      dispatch(fetchFilmReviewsAction(Number(id)));
+      await dispatch(fetchSimilarFilmsAction({id: Number(id)}));
     }
     fetchData();
   }, [id]);
+
+  useEffect(() => {
+    if (errorMessage) {
+      processErrorHandle(errorMessage);
+    }
+  }, [id, errorMessage]);
 
   const [activeTab, setActiveTab] = useState('Overview');
 
@@ -44,10 +55,8 @@ function FilmScreen():JSX.Element {
     );
   }
 
-  const film = similarFilms.find((item) => item.id === Number(id));
-
   if (!film) {
-    return <NotFoundScreen />;
+    return <><ErrorMessage /><NotFoundScreen /></>;
   }
 
   return (

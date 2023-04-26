@@ -1,16 +1,15 @@
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import HeaderUserBlock from '../../components/header-user-block/header-user-block';
 import Logo from '../../components/logo/logo';
 import ReviewForm from '../../components/review-form/review-form';
 import { useAppSelector } from '../../hooks';
-import { filmsSelector} from '../../store/selectors';
+import { filmSelector } from '../../store/selectors';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
+import { AppRoute } from '../../const';
 
 function AddReviewScreen(): JSX.Element {
   const {id} = useParams();
-  const filmsArray = useAppSelector(filmsSelector);
-
-  const film = filmsArray.find((item) => item.id === Number(id));
+  const film = useAppSelector(filmSelector);
 
   if (!film) {
     return <NotFoundScreen />;
@@ -22,7 +21,7 @@ function AddReviewScreen(): JSX.Element {
     <section className="film-card film-card--full">
       <div className="film-card__header">
         <div className="film-card__bg">
-          <img src="img/bg-the-grand-budapest-hotel.jpg" alt={name} />
+          <img src="img/bg-the-grand-budapest-hotel.jpg" alt={film.name} />
         </div>
 
         <h1 className="visually-hidden">WTW</h1>
@@ -33,7 +32,7 @@ function AddReviewScreen(): JSX.Element {
           <nav className="breadcrumbs">
             <ul className="breadcrumbs__list">
               <li className="breadcrumbs__item">
-                <a href="film-page.html" className="breadcrumbs__link">{name}</a>
+                <Link to={`${AppRoute.Films}/${Number(id)}`} className="breadcrumbs__link">{name}</Link>
               </li>
               <li className="breadcrumbs__item">
                 <a className="breadcrumbs__link">Add review</a>

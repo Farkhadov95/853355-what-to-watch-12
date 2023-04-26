@@ -1,11 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { DEFAULT_GENRE, NameSpace } from '../../const';
+import { AppRoute, DEFAULT_GENRE, ErrorMessages, NameSpace } from '../../const';
 import { AppDispatch, FilmsData, State } from '../../types/state';
 import { Film, Films, PostReview, Reviews } from '../../types/films';
 import { AxiosInstance } from 'axios';
+import { redirectToRoute } from '../actions/action';
 
 const initialState: FilmsData = {
   genre: DEFAULT_GENRE,
+  film: null,
   films: {
     filmsArray: [],
     similarFilms: [],
@@ -40,6 +42,18 @@ export const fetchSimilarFilmsAction = createAsyncThunk<Films, {id:number}, {
   },
 );
 
+export const fetchFilmAction = createAsyncThunk<Film, {id:number}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchFilm',
+  async({id}, {extra: api}) => {
+    const {data} = await api.get<Film>(`/films/${id}`);
+    return data;
+  },
+);
+
 export const fetchFilmReviewsAction = createAsyncThunk<Reviews, number, {
   dispatch: AppDispatch;
   state: State;
@@ -70,8 +84,9 @@ export const postReviewAction = createAsyncThunk<Reviews, {id: number; review: P
   extra: AxiosInstance;
 }>(
   'data/postReview',
-  async({id, review}, {extra: api}) => {
+  async({id, review}, {dispatch, extra: api}) => {
     const {data} = await api.post<Reviews>(`/comments/${id}`, review);
+    dispatch(redirectToRoute(`${AppRoute.Films}/${id}` as AppRoute));
     return data;
   },
 );
@@ -101,6 +116,7 @@ export const filmsData = createSlice({
       })
       .addCase(fetchFilmsDataAction.rejected, (state) => {
         state.films.isFilmsDataLoading = false;
+        state.error = ErrorMessages.FILMS_LOAD;
       })
       .addCase(fetchSimilarFilmsAction.pending, (state) => {
         state.films.isFilmsDataLoading = true;
@@ -111,6 +127,18 @@ export const filmsData = createSlice({
       })
       .addCase(fetchSimilarFilmsAction.rejected, (state) => {
         state.films.isFilmsDataLoading = false;
+        state.error = ErrorMessages.FILMS_LOAD;
+      })
+      .addCase(fetchFilmAction.pending, (state) => {
+        state.films.isFilmsDataLoading = true;
+      })
+      .addCase(fetchFilmAction.fulfilled, (state, action) => {
+        state.film = action.payload;
+        state.films.isFilmsDataLoading = false;
+      })
+      .addCase(fetchFilmAction.rejected, (state) => {
+        state.films.isFilmsDataLoading = false;
+        state.error = ErrorMessages.FILM_LOAD;
       })
       .addCase(fetchFilmReviewsAction.pending, (state) => {
         state.films.isFilmsDataLoading = true;
@@ -118,6 +146,10 @@ export const filmsData = createSlice({
       .addCase(fetchFilmReviewsAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
         state.films.isFilmsDataLoading = false;
+      })
+      .addCase(fetchFilmReviewsAction.rejected, (state) => {
+        state.films.isFilmsDataLoading = false;
+        state.error = ErrorMessages.REVIEWS_LOAD;
       })
       .addCase(setFavoriteStatusAction.pending, (state) => {
         state.films.isFilmsDataLoading = true;
@@ -130,12 +162,20 @@ export const filmsData = createSlice({
         }
         state.films.isFilmsDataLoading = false;
       })
+      .addCase(setFavoriteStatusAction.rejected, (state) => {
+        state.films.isFilmsDataLoading = false;
+        state.error = ErrorMessages.FAVORITE_STATUS_CHANGE;
+      })
       .addCase(postReviewAction.pending, (state) => {
         state.films.isReviewSending = true;
       })
       .addCase(postReviewAction.fulfilled, (state, action) => {
         state.reviews = action.payload;
         state.films.isReviewSending = false;
+      })
+      .addCase(postReviewAction.rejected, (state) => {
+        state.films.isReviewSending = false;
+        state.error = ErrorMessages.REVIEW_SEND;
       });
   },
 });

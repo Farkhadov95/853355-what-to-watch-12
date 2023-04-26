@@ -1,6 +1,6 @@
 import {store} from '../store';
 import { AuthorizationStatus } from '../const';
-import { Films, Reviews } from './films';
+import { Film, Films, Reviews } from './films';
 
 export type UserProcess = {
     authorizationStatus: AuthorizationStatus;
@@ -8,6 +8,7 @@ export type UserProcess = {
 
 export type FilmsData = {
     genre: string;
+    film: Film | null;
     films: {
       filmsArray: Films;
       similarFilms: Films;
