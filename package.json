@@ -2,7 +2,7 @@
   "name": "project",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://farkhadov95.github.io/853355-what-to-watch-12/",
+  "homepage": "https://farkhadov95.github.io/853355-what-to-watch-12",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.6",
     "axios": "^0.27.2",
