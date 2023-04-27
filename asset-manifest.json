@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/853355-what-to-watch-12/static/css/main.204b7181.css",
-    "main.js": "/853355-what-to-watch-12/static/js/main.e264ce6f.js",
-    "index.html": "/853355-what-to-watch-12/index.html",
-    "main.204b7181.css.map": "/853355-what-to-watch-12/static/css/main.204b7181.css.map",
-    "main.e264ce6f.js.map": "/853355-what-to-watch-12/static/js/main.e264ce6f.js.map"
+    "main.css": "/853355-what-to-watch-12/build/static/css/main.204b7181.css",
+    "main.js": "/853355-what-to-watch-12/build/static/js/main.e264ce6f.js",
+    "index.html": "/853355-what-to-watch-12/build/index.html",
+    "main.204b7181.css.map": "/853355-what-to-watch-12/build/static/css/main.204b7181.css.map",
+    "main.e264ce6f.js.map": "/853355-what-to-watch-12/build/static/js/main.e264ce6f.js.map"
   },
   "entrypoints": [
     "static/css/main.204b7181.css",
