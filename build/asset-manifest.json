@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.204b7181.css",
-    "main.js": "/static/js/main.e264ce6f.js",
-    "index.html": "/index.html",
-    "main.204b7181.css.map": "/static/css/main.204b7181.css.map",
-    "main.e264ce6f.js.map": "/static/js/main.e264ce6f.js.map"
+    "main.css": "https://farkhadov95.github.io/853355-what-to-watch-12/static/css/main.204b7181.css",
+    "main.js": "https://farkhadov95.github.io/853355-what-to-watch-12/static/js/main.e264ce6f.js",
+    "index.html": "https://farkhadov95.github.io/853355-what-to-watch-12/index.html",
+    "main.204b7181.css.map": "https://farkhadov95.github.io/853355-what-to-watch-12/static/css/main.204b7181.css.map",
+    "main.e264ce6f.js.map": "https://farkhadov95.github.io/853355-what-to-watch-12/static/js/main.e264ce6f.js.map"
   },
   "entrypoints": [
     "static/css/main.204b7181.css",
