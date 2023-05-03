@@ -9,24 +9,19 @@ import SignInScreen from '../../pages/sign-in-screen/sign-in-screen';
 import NotFoundScreen from '../../pages/not-found-screen/not-found-screen';
 import PrivateRoute from '../private-route/private-route';
 import HistoryRouter from '../history-route/history-route';
-import browserHistory from '../../browser-history';
+import hashHistory from '../../browser-history';
 
 function App(): JSX.Element {
 
   return (
-    <HistoryRouter history={browserHistory}>
+    <HistoryRouter history={hashHistory}>
       <Routes>
-        <Route
-          path={AppRoute.Root}
-          element={
-            <MainScreen />
-          }
-        />
+        <Route path={AppRoute.Root} element={<MainScreen />} />
         <Route
           path={AppRoute.MyList}
           element={
             <PrivateRoute>
-              <MyListScreen/>
+              <MyListScreen />
             </PrivateRoute>
           }
         />
@@ -34,34 +29,14 @@ function App(): JSX.Element {
           path={`${AppRoute.Review}/:id`}
           element={
             <PrivateRoute>
-              <AddReviewScreen/>
+              <AddReviewScreen />
             </PrivateRoute>
           }
         />
-        <Route
-          path={`${AppRoute.Films}/:id`}
-          element={
-            <FilmScreen />
-          }
-        />
-        <Route
-          path={`${AppRoute.Player}/:id`}
-          element={
-            <PlayerScreen/>
-          }
-        />
-        <Route
-          path={AppRoute.Login}
-          element={
-            <SignInScreen />
-          }
-        />
-        <Route
-          path='*'
-          element={
-            <NotFoundScreen />
-          }
-        />
+        <Route path={`${AppRoute.Films}/:id`} element={<FilmScreen />} />
+        <Route path={`${AppRoute.Player}/:id`} element={<PlayerScreen />} />
+        <Route path={AppRoute.Login} element={<SignInScreen />} />
+        <Route path='*' element={<NotFoundScreen />} />
       </Routes>
     </HistoryRouter>
   );

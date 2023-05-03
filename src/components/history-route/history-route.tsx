@@ -1,9 +1,9 @@
-import {useState, useLayoutEffect} from 'react';
-import {Router} from 'react-router-dom';
-import type {BrowserHistory} from 'history';
+import { useState, useLayoutEffect } from 'react';
+import { Router } from 'react-router-dom';
+import type { HashHistory } from 'history';
 
 export interface HistoryRouterProps {
-  history: BrowserHistory;
+  history: HashHistory;
   basename?: string;
   children?: React.ReactNode;
 }

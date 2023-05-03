@@ -7,7 +7,7 @@ type GenreItemProp = {
   isActive: boolean;
 }
 
-function GenreItem({genre, isActive}: GenreItemProp): JSX.Element {
+function GenreItem({ genre, isActive }: GenreItemProp): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleChange = () => {
@@ -16,9 +16,9 @@ function GenreItem({genre, isActive}: GenreItemProp): JSX.Element {
 
   return (
     <li className={classNames('catalog__genres-item',
-      {'catalog__genres-item--active':isActive})}
+      { 'catalog__genres-item--active': isActive })}
     >
-      <a href="#"
+      <a
         className="catalog__genres-link"
         onClick={handleChange}
       >

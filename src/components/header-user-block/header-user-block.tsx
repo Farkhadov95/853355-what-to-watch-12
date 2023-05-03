@@ -13,13 +13,13 @@ function HeaderUserBlock(): JSX.Element {
       <li className="user-block__item">
         <div className="user-block__avatar">
           {authorizationStatus === AuthorizationStatus.Auth
-            ? <Link to={AppRoute.MyList}><img src="img/avatar.jpg" alt="User avatar" width="63" height="63" /></Link>
+            ? <Link to={AppRoute.MyList}><img src="/853355-what-to-watch-12/img/avatar.jpg" alt="User avatar" width="63" height="63" /></Link>
             : <span></span>}
         </div>
       </li>
       <li className="user-block__item">
         {authorizationStatus === AuthorizationStatus.Auth
-          ? <Link className="user-block__link" onClick={(evt) => {evt.preventDefault(); dispatch(logoutAction());}} to='/'>Sign out</Link>
+          ? <Link className="user-block__link" onClick={(evt) => { evt.preventDefault(); dispatch(logoutAction()); }} to='/'>Sign out</Link>
           : <Link className="user-block__link" to={AppRoute.Login}>Sign in</Link>}
       </li>
     </ul>
