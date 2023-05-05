@@ -1,49 +1,27 @@
-# Личный проект «Что посмотреть»
+What To Watch
 
-* Студент: [Amir Farkhadov](https://up.htmlacademy.ru/react/12/user/853355).
-* Наставник: [Константин Антонов](https://htmlacademy.ru/profile/rawle51).
+This is an online cinema web application that allows users to browse and watch movies. It was created as my course project, with specific requirements and deadlines.
 
----
+Technologies Used
+The application was built using the following technologies:
 
-_Не удаляйте и не изменяйте папки и файлы:_
-_`.editorconfig`, `.gitattributes`, `.gitignore`._
+* TypeScript
+* React
+* React Hooks (useRef, useState, useEffect, etc.)
+* Redux, Redux Toolkit, and Redux Thunk for global state management
+* React Router for routing
+* Axios library for making HTTP requests
 
----
+Getting Started.
 
-### Памятка
-
-#### 1. Зарегистрируйтесь на Гитхабе
-
-Если у вас ещё нет аккаунта на [github.com](https://github.com/join), скорее зарегистрируйтесь.
-
-#### 2. Создайте форк
-
-Откройте репозиторий и нажмите кнопку «Fork» в правом верхнем углу. Репозиторий из Академии будет скопирован в ваш аккаунт.
-
-<img width="769" alt="Press 'Fork'" src="https://cloud.githubusercontent.com/assets/259739/20264045/a1ddbf40-aa7a-11e6-9a1a-724a1c0123c8.png">
-
-Получится вот так:
-
-<img width="769" alt="Forked" src="https://cloud.githubusercontent.com/assets/259739/20264122/f63219a6-aa7a-11e6-945a-89818fc7c014.png">
-
-#### 3. Клонируйте репозиторий на свой компьютер
-
-Будьте внимательны: нужно клонировать свой репозиторий (форк), а не репозиторий Академии. Также обратите внимание, что клонировать репозиторий нужно через SSH, а не через HTTPS. Нажмите зелёную кнопку в правой части экрана, чтобы скопировать SSH-адрес вашего репозитория:
-
-<img width="769" alt="SSH" src="https://cloud.githubusercontent.com/assets/259739/20264180/42704126-aa7b-11e6-9ab4-73372b812a53.png">
-
-Клонировать репозиторий можно так:
-
-```
-git clone SSH-адрес_вашего_форка
-```
-
-Команда клонирует репозиторий на ваш компьютер и подготовит всё необходимое для старта работы.
-
-#### 4. Начинайте обучение!
-
----
-
-<a href="https://htmlacademy.ru/intensive/react"><img align="left" width="50" height="50" title="HTML Academy" src="https://up.htmlacademy.ru/static/img/intensive/react/logo-for-github.png"></a>
-
-Репозиторий создан для обучения на профессиональном онлайн‑курсе «[React. Разработка сложных клиентских приложений](https://htmlacademy.ru/intensive/react)» от [HTML Academy](https://htmlacademy.ru).
+To run the application on your local machine, follow these steps:
+* Clone the repository: git clone <repository-url>
+* Install the dependencies: npm install
+* Start the development server: npm start
+* Open the application in your browser at http://localhost:3000
+  
+  or
+* use a link: https://farkhadov95.github.io/853355-what-to-watch-12/
+ 
+Usage
+Once the application is running, users can browse and watch movies. The interface is designed to be user-friendly and interactive.
